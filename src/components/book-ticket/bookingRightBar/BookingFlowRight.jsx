@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePlace } from "@/hooks/usePlace";
 import { useBookingActions } from "@/hooks/useBookingActions";
-import DateSelector from "./DateSelector";
-import TicketCounter from "./TicketCounter";
-import GuideSelector from "./GuideSelector";
-import VisitorForm from "./VisitorForm";
+import DateSelector from "./bookingParts/DateSelector";
+import TicketCounter from "./bookingParts/TicketCounter";
+import GuideSelector from "./bookingParts/GuideSelector";
+import VisitorForm from "./bookingParts/VisitorForm";
 
 export default function BookingFlowRight() {
     const [step, setStep] = useState(0);

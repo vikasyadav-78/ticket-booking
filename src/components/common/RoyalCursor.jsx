@@ -1,21 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+
 export default function RoyalCursor() {
-
-    const [position, setPosition] = useState({
-        x: 0,
-        y: 0,
-    });
-
+    const [position, setPosition] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
     const [isHidden, setIsHidden] = useState(true);
+
     useEffect(() => {
         const moveCursor = (e) => {
-            setPosition({
-                x: e.clientX,
-                y: e.clientY,
-            });
+            setPosition({ x: e.clientX, y: e.clientY });
             setIsHidden(false);
         };
         const handleMouseOver = (e) => {
@@ -23,6 +17,7 @@ export default function RoyalCursor() {
             if (
                 target.tagName === "BUTTON" ||
                 target.tagName === "A" ||
+                target.tagName === "INPUT" ||
                 target.closest("button") ||
                 target.closest("a")
             ) {
@@ -34,6 +29,7 @@ export default function RoyalCursor() {
         const handleMouseLeave = () => {
             setIsHidden(true);
         };
+
         window.addEventListener("mousemove", moveCursor);
         window.addEventListener("mouseover", handleMouseOver);
         document.addEventListener("mouseleave", handleMouseLeave);
@@ -47,52 +43,41 @@ export default function RoyalCursor() {
 
     return (
         <>
+            {/* 1. Center Pointer Dot (Reduced from 10px to 6px) */}
             <motion.div
                 animate={{
-                    x: position.x - 5,
-                    y: position.y - 5,
+                    x: position.x - 3, // Changed from -5 to -3 (Half of 6px)
+                    y: position.y - 3,
+                    scale: isHovering ? 1.3 : 1,
+                    opacity: isHidden ? 0 : 1,
+                }}
+                transition={{ type: "spring", stiffness: 700, damping: 30, mass: 0.1 }}
+                className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[#FFD700] z-[9999] pointer-events-none shadow-[0_0_10px_rgba(255,215,0,0.9)]"
+            />
+
+            {/* 2. Luxury Outer Ring (Reduced from 48px to 32px) */}
+            <motion.div
+                animate={{
+                    x: position.x - 16, // Changed from -24 to -16 (Half of 32px)
+                    y: position.y - 16,
                     scale: isHovering ? 1.5 : 1,
                     opacity: isHidden ? 0 : 1,
                 }}
-                transition={{
-                    type: "spring",
-                    stiffness: 600,
-                    damping: 28,
-                    mass: 0.2,
-                }}
-                className="fixed top-0 left-0 w-[10px] h-[10px] rounded-full bg-[#FFD700] z-[9999] pointer-events-none shadow-[0_0_15px_rgba(255,215,0,0.8)]"
-            />
- 
-            <motion.div
-                animate={{
-                    x: position.x - 24,
-                    y: position.y - 24,
-                    scale: isHovering ? 1.8 : 1,
-                    opacity: isHidden ? 0 : 1,
-                }}
-                transition={{
-                    type: "spring",
-                    stiffness: 180,
-                    damping: 20,
-                }}
-                className="fixed top-0 left-0 w-12 h-12 rounded-full border border-[#FFD700]/80 z-[9998] pointer-events-none shadow-[0_0_30px_rgba(255,215,0,0.45)] backdrop-blur-[1px]"
-            />
- 
-            <motion.div
-                animate={{
-                    x: position.x - 40,
-                    y: position.y - 40,
-                    scale: isHovering ? 2 : 1,
-                    opacity: isHovering ? 0.25 : 0.12,
-                }}
-                transition={{
-                    type: "spring",
-                    stiffness: 120,
-                    damping: 25,
-                }}
-                className="fixed top-0 left-0 w-20 h-20 rounded-full bg-[#FFD700] blur-3xl z-[9997] pointer-events-none"
+                transition={{ type: "spring", stiffness: 220, damping: 24 }}
+                className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#FFD700]/70 z-[9998] pointer-events-none shadow-[0_0_15px_rgba(255,215,0,0.25)] backdrop-blur-[0.5px]"
             />
 
+            {/* 3. Ambient Aura Glow (Squeezed and lowered opacity for elegance) */}
+            <motion.div
+                animate={{
+                    x: position.x - 24, // Changed from -40 to -24 (Half of 48px)
+                    y: position.y - 24,
+                    scale: isHovering ? 1.6 : 1,
+                    opacity: isHidden ? 0 : isHovering ? 0.15 : 0.08,
+                }}
+                transition={{ type: "spring", stiffness: 150, damping: 28 }}
+                className="fixed top-0 left-0 w-12 h-12 rounded-full bg-[#FFD700] blur-2xl z-[9997] pointer-events-none"
+            />
         </>
     );
 }

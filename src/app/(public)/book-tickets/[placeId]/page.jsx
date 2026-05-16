@@ -5,9 +5,9 @@ import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import BookingFlowRight from "@/components/book-ticket/bookingRightBar/BookingFlowRight";
+import BookingFlowLeft from "@/components/book-ticket/bookingLeftbar/BookingFlowLeft";
 import { usePlaceById } from "@/lib/queries/usePlace";
 import { setSelectedPlace } from "@/redux/features/place/placeSlice";
-import BookingFlowLeft from "@/components/book-ticket/bookingLeftbar/BookingFlowLeft";
 
 export default function Page() {
     const { placeId } = useParams();
@@ -73,11 +73,15 @@ export default function Page() {
             initial="hidden"
             animate="visible"
         >
-            {/* LEFT SECTION */}
+            {/* LEFT SECTION (Clean Props Binding) */}
             <BookingFlowLeft place={place} itemVariants={itemVariants} />
 
-            {/* RIGHT SECTION */}
-            <section className="w-full lg:w-1/2 h-full overflow-y-auto flex items-center justify-center p-4 sm:p-6 lg:p-8">
+            {/* RIGHT SECTION (With Lenis Isolation Locks) */}
+            <section
+                data-lenis-prevent
+                style={{ overscrollBehavior: "contain" }}
+                className="w-full lg:w-1/2 h-full overflow-y-auto flex items-center justify-center p-4 sm:p-6 lg:p-8 isolate no-scrollbar"
+            >
                 <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}

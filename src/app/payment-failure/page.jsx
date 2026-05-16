@@ -1,7 +1,7 @@
 "use client";
 import React, { Suspense } from "react";
 import { useRouter } from "next/navigation";
-import Status from "@/components/book-ticket/bookingRightBar/Status";
+import Status from "@/components/book-ticket/bookingRightBar/bookingParts/Status";
 
 function FailureContent() {
     const router = useRouter();

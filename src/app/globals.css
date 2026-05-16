@@ -8,6 +8,7 @@
   --color-gold: #D4AF37;
 }
 
+/* FIX: Lenis Smooth scroll integrations */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -21,27 +22,35 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
-/* .lenis.lenis-stopped {
-  overflow: hidden;
-} */
-
 html {
   overflow-x: hidden;
+  scroll-behavior: auto;
 }
-
 
 body {
   background-color: var(--color-sandstone);
   color: #1d1d1d;
   font-family: serif;
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* FIX: Pure CSS Scrollbar Hide Utility जो हर ब्राउज़र पर काम करेगी */
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Background Mandala Texture Setup */
 .bg-mandala {
   background-image: url('https://www.transparenttextures.com/patterns/mandala-light.png');
   background-repeat: repeat;
 }
-
 
 section {
   position: relative;
@@ -57,16 +66,7 @@ img {
   color: white;
 }
 
-html {
-  scroll-behavior: auto;
-}
-
-body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
-
+/* Luxury Card Hover Animations */
 .hover-luxury {
   transition: all 0.6s ease;
 }
@@ -76,42 +76,16 @@ body {
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
 }
 
-/* .scrollbar-hide::-webkit-scrollbar {
-  display: none;
-} */
-
-/* .scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-} */
-
-
 @keyframes floatUpDown {
-  0% {
-    transform: translateY(0px) rotate(-8deg);
-  }
-
-  50% {
-    transform: translateY(-10px) rotate(-16deg);
-  }
-
-  100% {
-    transform: translateY(0px) rotate(-8deg);
-  }
+  0% { transform: translateY(0px) rotate(-8deg); }
+  50% { transform: translateY(-10px) rotate(-16deg); }
+  100% { transform: translateY(0px) rotate(-8deg); }
 }
 
 @keyframes floatUpDown2 {
-  0% {
-    transform: translateY(0px) rotate(6deg);
-  }
-
-  50% {
-    transform: translateY(-10px) rotate(6deg);
-  }
-
-  100% {
-    transform: translateY(0px) rotate(6deg);
-  }
+  0% { transform: translateY(0px) rotate(6deg); }
+  50% { transform: translateY(-10px) rotate(6deg); }
+  100% { transform: translateY(0px) rotate(6deg); }
 }
 
 .floatUpDown {
