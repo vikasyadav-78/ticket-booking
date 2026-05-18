@@ -1,73 +1,137 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion"; // Proper animations toolkit integrated
 import BookNowBtn from "@/components/ui/BookNowBtn";
-import Banners from "@/components/Home/Banners"; 
+import Banners from "@/components/Home/Banners";
 import Link from "next/link";
 import Image from "next/image";
 import { usePlaces } from "@/lib/queries/usePlace";
-import { mockPlaces } from "@/data/mockPlaces"; 
+import { mockPlaces } from "@/data/mockPlaces";
 import PlacesSlider from "@/components/Home/PlacesSlider";
+import GuidBanner from "@/components/Home/GuidBanner";
+import { ChevronsUp } from "lucide-react";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
+const cascadeContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 }
+  }
+};
 
 export default function Home() {
   const { data: places = [] } = usePlaces();
-  const finalPlaces = places?.length > 2 ? places : mockPlaces; 
+  const finalPlaces = places?.length > 2 ? places : mockPlaces;
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => { 
+      if (window.scrollY > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+    window.addEventListener("scroll", toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+ 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   return (
-    <>
-      <section className="relative overflow-hidden">
-        <div className="font-sans bg-[#003020] shadow-xl/30">
+    <> 
+      <AnimatePresence>
+        {isVisible && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 z-50 bg-[#E07A5F] hover:bg-[#C35A40] text-white p-3 rounded-full shadow-2xl transition-colors group cursor-pointer"
+          >
+            <ChevronsUp className="size-8 transition-transform group-hover:-translate-y-1" />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      <section className="relative overflow-hidden select-none bg-[#F4F1DE]/20">
+        <div className="font-sans bg-[#1A365D] shadow-xl/30">
           <div className="relative h-[75vh] md:h-[90vh] overflow-hidden rounded-b-[40px] md:rounded-b-[80px]">
-            <img
+            <motion.img
+              initial={{ scale: 1.12, opacity: 0 }}
+              animate={{ scale: 1.05, opacity: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
               src="https://www.agoda.com/wp-content/uploads/2024/05/Nahargarh-Fort-jaipur-india.jpg"
               alt="Jaipur"
-              className="absolute inset-0 w-full h-full object-cover scale-105"
+              className="absolute inset-0 w-full h-full object-cover opacity-85"
             />
 
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 backdrop-blur-[2px] flex items-center justify-center text-center px-4">
-              <div className="max-w-5xl">
-                <p className="text-gold tracking-[6px] uppercase text-xs sm:text-sm mb-6 font-bold">
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#1A365D]/90 backdrop-blur-[1.3px] flex items-center justify-center text-center px-4">
+              <motion.div
+                variants={cascadeContainer}
+                initial="hidden"
+                animate="visible"
+                className="max-w-5xl"
+              >
+                <motion.p variants={fadeInUp} className="text-[#D4AF37] tracking-[6px] uppercase text-xs sm:text-sm mb-6 font-bold">
                   Royal Heritage of Rajasthan
-                </p>
-                <h1 className="text-white text-4xl sm:text-5xl md:text-7xl font-serif tracking-wide leading-tight drop-shadow-2xl">
-                  Discover Jaipur's
-                  Hidden Natural Treasure
-                </h1>
-                <p className="mt-8 text-white/80 text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
+                </motion.p>
+
+                <motion.h1 variants={fadeInUp} className="text-white text-4xl sm:text-5xl md:text-7xl font-serif tracking-wide leading-tight drop-shadow-2xl font-normal">
+                  Discover Jaipur's<br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#F4F1DE] to-[#D4AF37]">Hidden Natural Treasure</span>
+                </motion.h1>
+
+                <motion.p variants={fadeInUp} className="mt-8 text-white/80 text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl mx-auto font-serif italic">
                   Explore timeless forts, majestic palaces, and breathtaking
                   desert landscapes woven deeply into Rajasthan's royal history.
-                </p>
-              </div>
+                </motion.p>
+              </motion.div>
             </div>
           </div>
 
           <div className="relative flex justify-center px-4">
-            <div className="w-full sm:w-11/12 md:w-4/5 bg-gradient-to-r from-[#D4AF37] to-[#f5d67b] rounded-[28px] backdrop-blur-xl border border-white/20 px-4 sm:px-6 md:px-10 py-6 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-12 -mt-20 z-30">
+            <motion.div
+              initial={{ opacity: 0, y: 40, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.4 }}
+              className="w-full sm:w-11/12 md:w-4/5 bg-white rounded-[24px] border border-gray-100 px-6 sm:px-8 md:px-10 py-6 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-12 -mt-20 z-30 relative overflow-hidden"
+            >
               <div className="flex flex-col sm:flex-row flex-wrap gap-8 md:gap-12 w-full">
-                <div className="flex flex-col">
-                  <span className="font-bold text-royal-blue uppercase tracking-widest text-xs">
+                <div className="flex flex-col text-left">
+                  <span className="font-bold text-[#E07A5F] uppercase tracking-widest text-xs">
                     📍 Location
                   </span>
-                  <span className="text-royal-blue font-semibold mt-1">
+                  <span className="text-[#1A365D] font-bold mt-1 text-sm sm:text-base">
                     Jaipur Heritage
                   </span>
                 </div>
 
-                <div className="flex flex-col">
-                  <span className="font-bold text-royal-blue uppercase tracking-widest text-xs">
+                <div className="flex flex-col text-left">
+                  <span className="font-bold text-[#E07A5F] uppercase tracking-widest text-xs">
                     Timings
                   </span>
-
-                  <span className="text-royal-blue font-semibold mt-1">
+                  <span className="text-[#1A365D] font-bold mt-1 font-mono text-sm sm:text-base">
                     5:00 AM - 8:00 PM
                   </span>
                 </div>
 
-                <div className="flex flex-col">
-                  <span className="font-bold text-royal-blue uppercase tracking-widest text-xs">
+                <div className="flex flex-col text-left">
+                  <span className="font-bold text-[#E07A5F] uppercase tracking-widest text-xs">
                     Royal Experience
                   </span>
-
-                  <span className="text-royal-blue font-semibold mt-1">
+                  <span className="text-[#1A365D] font-bold mt-1 text-sm sm:text-base">
                     Premium Heritage Access
                   </span>
                 </div>
@@ -77,42 +141,59 @@ export default function Home() {
                 <Link href={finalPlaces?.[0] ? `/book-tickets/${finalPlaces[0]?.id || finalPlaces[0]?._id}` : "#"}
                   className="inline-flex w-full md:w-auto" >
                   <BookNowBtn
-                    addClass="w-full md:w-auto bg-royal-blue text-white border-none hover:bg-jaipur-dark hover:scale-105 transition-all duration-500 shadow-xl"
-                    hasClass="white"
+                    addClass="w-full md:w-auto bg-[#E07A5F] hover:bg-[#C35A40] text-white border-none px-8 py-3.5 rounded-xl font-bold tracking-wide shadow-lg shadow-[#E07A5F]/20 transition-all"
                     title="Book Now"
                   />
                 </Link>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
-        <section className="mt-32 px-4 sm:px-6 md:px-10 lg:px-20">
-          <div className="text-center mb-16">
-            <p className="text-jaipur-pink uppercase tracking-[6px] text-xs font-bold">
-              Royal Destinations
-            </p>
-            <h2 className="text-4xl md:text-6xl font-serif text-royal-blue mt-4">
-              Explore Jaipur Heritage
-            </h2>
-          </div>
-          <PlacesSlider finalPlaces={finalPlaces} />
+
+        <section>
+          <GuidBanner />
         </section>
 
+        {/* <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={cascadeContainer}
+          className="mt-32 px-4 sm:px-6 md:px-10 lg:px-20" >
+          <div className="text-center mb-16">
+            <motion.p variants={fadeInUp} className="text-jaipur-pink uppercase tracking-[6px] text-xs font-bold">
+              Royal Destinations
+            </motion.p>
+            <motion.h2 variants={fadeInUp} className="text-4xl md:text-6xl font-serif text-royal-blue mt-4">
+              Explore Jaipur Heritage
+            </motion.h2>
+          </div>
+          <motion.div variants={fadeInUp}>
+            <PlacesSlider finalPlaces={finalPlaces} />
+          </motion.div>
+        </motion.section> */}
 
-        <div className="mt-28 px-4 sm:px-6 md:px-10 lg:px-20 flex justify-end">
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={cascadeContainer}
+          className="mt-24 px-4 sm:px-6 md:px-10 lg:px-20 flex justify-end"
+        >
           <div className="text-right max-w-3xl">
-            <p className="font-serif font-bold text-3xl sm:text-4xl md:text-4xl leading-tight text-royal-blue">
-              Bringing the Desert Wilderness
+            <motion.p variants={fadeInUp} className="font-serif font-bold text-3xl sm:text-4xl md:text-4xl leading-tight text-[#1A365D]">
+              Bringing the Desert Wilderness<br />
               Closer to the People of Jaipur
-            </p>
+            </motion.p>
 
-            <p className="mt-8 text-base sm:text-lg md:text-xl leading-[2] text-black/75">
+            <motion.p variants={fadeInUp} className="mt-8 text-base sm:text-lg md:text-xl leading-[2] text-black/75">
               Inspired by the raw beauty of the Aravalli landscape, the Kishan Bagh Sand Dunes Park offers a stunning ecological retreat at the foot of Nahargarh hills. Elevated walkways, golden dunes, and native vegetation together create a timeless desert experience unlike
               any other in Rajasthan.
-            </p>
+            </motion.p>
           </div>
-        </div>
+        </motion.div>
 
         <Banners
           url="https://assets.cntraveller.in/photos/66a9ce9ba5fa5da03ea872ba/master/w_1600%2Cc_limit/GettyImages-1503371454.jpg"
@@ -140,34 +221,45 @@ export default function Home() {
           text="The golden sandstone of Amer and the pink glow of the City Palace come alive, offering a breathtaking glimpse into timeless grandeur."
         />
 
-        <div className="mt-32 mb-16 px-4 sm:px-6 md:px-10 lg:px-20 flex justify-start">
-          <div className="max-w-3xl">
-            <p className="font-serif font-bold text-3xl sm:text-4xl md:text-5xl leading-tight text-royal-blue">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={cascadeContainer}
+          className="mt-24 mb-16 px-4 sm:px-6 md:px-10 lg:px-20 flex justify-start"
+        >
+          <div className="max-w-3xl text-left">
+            <motion.p variants={fadeInUp} className="font-serif font-bold text-3xl sm:text-4xl md:text-5xl leading-tight text-[#1A365D]">
               Discover the Royal Charm of Jaipur
-            </p>
+            </motion.p>
 
-            <p className="mt-8 text-base sm:text-lg md:text-xl leading-[2] text-black/75">
+            <motion.p variants={fadeInUp} className="mt-8 text-base sm:text-lg md:text-xl leading-[2] text-black/75">
               Jaipur, famously known as the Pink City of India,
               is a mesmerizing blend of heritage, culture,
               architecture, and royal hospitality. Every fort,
               palace, and bustling bazaar tells stories of kings,
               warriors, and timeless traditions that continue to
               inspire travelers from around the world.
-            </p>
+            </motion.p>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mt-20 bg-gradient-to-b from-[#08203e] to-[#0b2149] p-6 md:p-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-20 bg-[#1A365D] p-6 md:p-10"
+        >
           <Image
             src="/images/theJaipurCity.png"
             alt="Jaipur View"
             width={2000}
             height={300}
-            className="w-full h-[220px] sm:h-[300px] md:h-[300px] object-cover rounded-[40px] shadow-2xl"
+            className="w-full h-[220px] sm:h-[300px] md:h-[300px] object-cover rounded-[30px] shadow-2xl"
           />
-        </div>
+        </motion.div>
       </section>
-
     </>
   );
-}
+} 

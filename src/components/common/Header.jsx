@@ -39,7 +39,7 @@ const Header = () => {
 
                 <div className="md:order-2">
                     <Link href={bookingLink}>
-                        <BookNowBtn title={"Book Now"} addClass={scrolled ? "bg-jaipur-pink text-white border-none hover:bg-gold hover:scale-105" : "bg-jaipur-dark text-white border-none hover:bg-royal-blue hover:scale-105"} />
+                        <BookNowBtn title={"Book Now"} addClass={scrolled ? "bg-jaipur-pink text-white border-none hover:bg-[#C35A40] hover:scale-105" : "bg-jaipur-dark text-white border-none hover:bg-[#C35A40] hover:scale-105"} />
                     </Link>
                 </div>
             </div>

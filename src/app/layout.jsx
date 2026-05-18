@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "@/providers";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
-import RoyalCursor from "@/components/common/RoyalCursor";
+// import RoyalCursor from "@/components/common/RoyalCursor";
 import LayoutWrapper from "@/components/common/LayoutWrapper";
 
 const geistSans = Geist({
@@ -26,7 +26,7 @@ export default function RootLayout({ children, }) {
       <body className="min-h-full flex flex-col">
         <Providers>
           <SmoothScrollProvider>
-            <RoyalCursor />
+            {/* <RoyalCursor /> */}
             <LayoutWrapper>
               {children}
             </LayoutWrapper>
