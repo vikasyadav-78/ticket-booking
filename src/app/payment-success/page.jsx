@@ -101,7 +101,7 @@ function SuccessContent() {
                                 <span className="text-[10px] uppercase tracking-wider text-gray-400 block font-sans font-medium">Reserved Seats</span>
                                 
                                 <span className="text-xs sm:text-base font-serif font-bold text-royal-blue tracking-wide block truncate">
-                                    Visitor <span className="text-jaipur-dark px-1 font-sans font-black">:</span> <span className="text-jaipur-dark text-sm sm:text-lg">{booking?.totalSeats || "1"}</span>
+                                    Visitor <span className="text-jaipur-dark px-1 font-sans font-black">:</span> <span className="text-jaipur-dark text-sm sm:text-lg">{booking?.totalSeats || "-"}</span>
                                 </span>
                             </div>
                             <div className="text-right">
@@ -118,7 +118,7 @@ function SuccessContent() {
                     <div className="p-4 sm:p-6 py-3 sm:py-4 bg-sandstone/30 border-t border-gold/5 flex justify-between items-center px-6 sm:px-8 relative">
                         <div className="text-left space-y-0.5">
                             <span className="text-[10px] uppercase tracking-[2px] text-gray-400 block font-sans font-bold">Total Fare Paid</span>
-                            <span className="text-2xl sm:text-3xl font-serif font-black text-royal-blue tracking-wide block">₹{booking?.totalAmount || "133"}</span>
+                            <span className="text-2xl sm:text-3xl font-serif font-black text-royal-blue tracking-wide block">₹{booking?.totalAmount || "-"}</span>
                         </div>
                         <div className="text-xs sm:text-sm font-mono tracking-widest text-royal-blue/30 font-bold select-none text-right">
                             #ET-{bookingId ? bookingId.slice(-6).toUpperCase() : "7FCFA9"}

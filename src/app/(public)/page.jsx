@@ -31,7 +31,7 @@ export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const toggleVisibility = () => { 
+    const toggleVisibility = () => {
       if (window.scrollY > 300) {
         setIsVisible(true);
       } else {
@@ -41,7 +41,7 @@ export default function Home() {
     window.addEventListener("scroll", toggleVisibility);
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
- 
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -50,7 +50,7 @@ export default function Home() {
   };
 
   return (
-    <> 
+    <>
       <AnimatePresence>
         {isVisible && (
           <motion.button
@@ -72,7 +72,7 @@ export default function Home() {
               initial={{ scale: 1.12, opacity: 0 }}
               animate={{ scale: 1.05, opacity: 1 }}
               transition={{ duration: 1.2, ease: "easeOut" }}
-              src="https://www.agoda.com/wp-content/uploads/2024/05/Nahargarh-Fort-jaipur-india.jpg"
+              src="/images/nahargarh-Fort.jpg"
               alt="Jaipur"
               className="absolute inset-0 w-full h-full object-cover opacity-85"
             />

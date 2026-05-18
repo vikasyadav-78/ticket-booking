@@ -4,56 +4,74 @@ import { motion } from "framer-motion";
 
 export default function Banners({ url, url2, text, reverse = false }) {
   return (
-    <section className="w-full py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden select-none">
-      <div className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} items-center justify-between gap-12 lg:gap-20`} >
+    <section className="w-full py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden select-none bg-white">
+      <div className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} items-center justify-between gap-12 md:gap-16 lg:gap-20 max-w-7xl mx-auto`}>
+
+        {/* IMAGE WRAPPER LAYER: Fluid responsive (Percentage & Aspect Ratio based) */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ staggerChildren: 0.2 }}
-          className="relative w-full md:w-1/2 h-[320px] sm:h-[420px] md:h-[500px]"
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ staggerChildren: 0.15 }}
+          className="relative w-full max-w-md md:max-w-none md:w-1/2 aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex-shrink-0"
         >
+          {/* Primary Image (Left-Bottom Layer) */}
           <motion.div
             variants={{
               hidden: { opacity: 0, x: reverse ? 30 : -30, y: 20 },
               visible: { opacity: 1, x: 0, y: 0, transition: { type: "spring", stiffness: 80, damping: 15 } }
             }}
-            className="absolute left-0 bottom-0 z-10 shadow-2xl floatUpDown"
+            className="absolute left-0 bottom-0 z-10 w-[65%] h-[75%] shadow-2xl floatUpDown"
           >
-            <img src={url} alt="Banner" className="w-48 sm:w-64 md:w-80 lg:w-96 h-40 sm:h-52 md:h-64 lg:h-72 object-cover border-4 md:border-8 border-white rounded-xl" />
+            <img
+              src={url}
+              alt="Banner Heritage Showcase"
+              className="w-full h-full object-cover border-4 md:border-8 border-white rounded-xl sm:rounded-2xl"
+            />
           </motion.div>
-          
+
+          {/* Secondary Image (Right-Top Overlay Layer) */}
           <motion.div
             variants={{
               hidden: { opacity: 0, scale: 0.92, y: -20 },
-              visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 12, delay: 0.15 } }
+              visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 12, delay: 0.1 } }
             }}
-            className="absolute right-0 top-0 md:left-24 md:bottom-24 md:top-auto z-20 shadow-2xl floatUpDown2"
+            className="absolute right-0 top-0 z-20 w-[65%] h-[75%] shadow-2xl floatUpDown2"
           >
-            <img src={url2} alt="Banner Secondary" className="w-48 sm:w-64 md:w-80 lg:w-96 h-40 sm:h-52 md:h-64 lg:h-72 object-cover border-4 md:border-8 border-white rounded-xl" />
+            <img
+              src={url2}
+              alt="Banner Detail Frame"
+              className="w-full h-full object-cover border-4 md:border-8 border-white rounded-xl sm:rounded-2xl"
+            />
           </motion.div>
         </motion.div>
 
+        {/* TEXT CONTENT CONTAINER: Clean fluid typography and dynamic bar */}
         <motion.div
-          initial={{ opacity: 0, x: reverse ? -40 : 40 }}
+          initial={{ opacity: 0, x: reverse ? -30 : 30 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="w-full md:w-1/2 text-black"
+          className="w-full md:w-1/2 text-left"
         >
-          <div className="flex items-start gap-3 md:gap-4 max-w-2xl text-left">
+          {/* items-stretch ensures the indicator bar height perfectly matches the text height */}
+          <div className="flex items-stretch gap-4 md:gap-6 max-w-2xl mx-auto md:mx-0">
+
+            {/* Structural Indicator Bar - Now dynamically scales with the paragraph */}
             <motion.div
               initial={{ scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="w-2 sm:w-3 md:w-2 h-16 md:h-15 bg-[#E07A5F] rounded-full shrink-0 origin-top" 
+              className="w-1.5 sm:w-2 bg-[#E07A5F] rounded-full shrink-0 origin-top"
             />
-            <p className="text-lg sm:text-xl md:text-3xl lg:text-4xl leading-relaxed font-serif text-[#1A365D] tracking-wide">
+
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl leading-relaxed md:leading-loose font-serif text-[#1A365D] tracking-wide py-1">
               {text}
             </p>
           </div>
         </motion.div>
+
       </div>
     </section>
   );

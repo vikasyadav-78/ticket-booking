@@ -107,10 +107,14 @@ export default function Footer() {
                 </div>
 
                 <div className="mt-10 text-center text-[11px] font-sans tracking-[3px] text-gray-400 uppercase">
-                    MADE WITH ❤️ IN INDIA BY{" "}
-                    <span className="text-royal-blue font-black tracking-[2px] ml-1">
+                    MADE WITH ❤️ IN INDIA BY{" "} 
+                    <a
+                        href="http://www.azzunique.in/"
+                        target="_blank"
+                        className="text-royal-blue font-black tracking-[2px] ml-1 hover:text-jaipur-pink hover:underline transition-all duration-300 cursor-pointer inline-block"
+                    >
                         AZZUNIQUE
-                    </span>
+                    </a>
                 </div>
             </motion.div>
 
