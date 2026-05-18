@@ -5,16 +5,16 @@ import Footer from "./Footer";
 export default function LayoutWrapper({ children }) {
     const pathname = usePathname();
     const hideLayout = pathname === "/payment-success" || pathname === "/payment-failure";
-    const hideFooter = pathname.startsWith("/book-tickets");
+    const hideFooterHeader = pathname.startsWith("/book-tickets");
 
 
     return (
         <>
-            {!hideLayout && <Header />}
+            {!hideLayout && !hideFooterHeader && <Header  />}
             <main className={!hideLayout ? "pt-[82px]" : ""}>
                 {children}
             </main>
-            {!hideLayout && !hideFooter && <Footer />}
+            {!hideLayout && !hideFooterHeader && <Footer />}
         </>
     );
 }

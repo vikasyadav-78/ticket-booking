@@ -9,16 +9,15 @@ import DateSelector from "./bookingParts/DateSelector";
 import TicketCounter from "./bookingParts/TicketCounter";
 import GuideSelector from "./bookingParts/GuideSelector";
 import VisitorForm from "./bookingParts/VisitorForm";
+import { ArrowRight, Lock, Castle } from "lucide-react";
 
 export default function BookingFlowRight() {
     const [step, setStep] = useState(0);
     const reduxData = useSelector((state) => state.booking);
     const { placeId, isPlaceLoaded } = usePlace();
 
-    // Scroll Control Logic based on Step
     useEffect(() => {
         const rightSection = document.querySelector('.overflow-y-auto');
-
         if (step === 0) {
             if (rightSection) rightSection.style.overflowY = 'hidden';
             document.documentElement.style.overflow = 'hidden';
@@ -28,7 +27,6 @@ export default function BookingFlowRight() {
             document.documentElement.style.overflow = 'hidden';
             document.body.style.overflow = 'hidden';
         }
-
         return () => {
             if (rightSection) rightSection.style.overflowY = 'auto';
             document.documentElement.style.overflow = '';
@@ -74,25 +72,24 @@ export default function BookingFlowRight() {
             },
             onError: (err) => {
                 console.error("Booking Error:", err);
-                alert("Booking failed. Please try again.");
+                alert("Booking failed. Please check your connection and try again.");
             },
         });
     };
 
     return (
-        <div className="bg-white rounded-[2rem] shadow-2xl border border-jaipur-pink/10 overflow-hidden relative w-full">
-            {/* Header Padding thoda tight kiya hai */}
-            <header className="bg-royal-blue py-5 px-6 text-center relative overflow-hidden shrink-0">
-                <div className="absolute inset-0 opacity-10 bg-mandala pointer-events-none"></div>
-                <h2 className="text-jaipur-pink font-serif text-xl tracking-[3px] uppercase italic relative z-10">
-                    {step === 0 ? "Welcome to Heritage" : "Booking Details"}
+        <div className="bg-[#f8f4ed] overflow-hidden relative w-full flex flex-col h-screen min-h-screen border-l border-gold/10 shadow-2xl">
+            {/* <header className="bg-gradient-to-b from-royal-blue to-[#08203e] text-center relative overflow-hidden shrink-0 border-b-4 border-jaipur-dark shadow-md">
+                <div className="absolute inset-0 opacity-[0.04] bg-mandala pointer-events-none"></div>
+                <h2 className="text-white font-serif text-base sm:text-lg tracking-[4px] uppercase relative z-10 font-bold drop-shadow-md mt-4 py-2">
+                    {step === 0 ? "Welcome to Heritage" : "Reservation Status"}
                 </h2>
-                <div className="h-0.5 w-10 bg-gold/50 mx-auto mt-1.5 rounded-full relative z-10" />
-            </header>
-
-            {/* Inner Content Padding dynamic kiya hai */}
-            <div className="p-5 sm:p-8 min-h-0">
+                <div className="h-[2px] w-12 bg-gold mx-auto mt-1 rounded-full relative z-10" />
+            </header> */}
+ 
+            <div className="p-6 sm:p-10 lg:p-16 flex-1 overflow-y-auto custom-scrollbar relative flex flex-col min-h-0 justify-start items-stretch w-full max-w-2xl mx-auto">
                 {step > 0 && <StepIndicator currentStep={step} />}
+
                 <AnimatePresence mode="wait">
                     {step > 0 && !isPlaceLoaded ? (
                         <motion.div
@@ -100,20 +97,23 @@ export default function BookingFlowRight() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="h-[250px] flex items-center justify-center font-serif italic text-jaipur-dark"
+                            className="h-full w-full flex items-center justify-center font-serif text-royal-blue/70 min-h-[300px]"
                         >
-                            <div className="flex flex-col items-center gap-3">
-                                <div className="w-8 h-8 border-4 border-jaipur-pink/20 border-t-jaipur-dark rounded-full animate-spin"></div>
-                                <p>Loading ...</p>
+                            <div className="flex flex-col items-center gap-4">
+                                <div className="w-10 h-10 border-4 border-gold/20 border-t-royal-blue rounded-full animate-spin shadow-sm"></div>
+                                <p className="text-xs uppercase tracking-widest font-bold">Synchronizing Gateway...</p>
                             </div>
                         </motion.div>
                     ) : (
-                        renderStep(step, {
-                            setStep,
-                            handleFinalBooking,
-                            reduxData,
-                            isSubmitting,
-                        })
+                        
+                        <div className="w-full h-full flex flex-col justify-between items-stretch flex-1 min-h-0">
+                            {renderStep(step, {
+                                setStep,
+                                handleFinalBooking,
+                                reduxData,
+                                isSubmitting,
+                            })}
+                        </div>
                     )}
                 </AnimatePresence>
             </div>
@@ -125,73 +125,77 @@ export default function BookingFlowRight() {
 function renderStep(step, props) {
     const { setStep, handleFinalBooking, reduxData, isSubmitting } = props;
     switch (step) {
-        case 0:
-            return <StartStep onNext={() => setStep(1)} />;
-        case 1:
-            return <DateSelector onNext={() => setStep(2)} />;
-        case 2:
-            return <TicketCounter onNext={() => setStep(3)} onBack={() => setStep(1)} tickets={reduxData.tickets} />;
-        case 3:
-            return <GuideSelector onNext={() => setStep(4)} onBack={() => setStep(2)} addons={reduxData.addons} />;
-        case 4:
-            return <VisitorForm onSubmit={handleFinalBooking} onBack={() => setStep(3)} loading={isSubmitting} />;
-        default:
-            return null;
+        case 0: return <StartStep onNext={() => setStep(1)} />;
+        case 1: return <DateSelector onNext={() => setStep(2)} />;
+        case 2: return <TicketCounter onNext={() => setStep(3)} onBack={() => setStep(1)} tickets={reduxData.tickets} />;
+        case 3: return <GuideSelector onNext={() => setStep(4)} onBack={() => setStep(2)} addons={reduxData.addons} />;
+        case 4: return <VisitorForm onSubmit={handleFinalBooking} onBack={() => setStep(3)} loading={isSubmitting} />;
+        default: return null;
     }
 }
 
-// StartStep ko short aur compact kiya hai taaki button hamesha samne dikhe
 const StartStep = ({ onNext }) => (
     <motion.div
-        initial={{ opacity: 0, scale: 0.97 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, x: -15 }}
-        className="text-center py-2"
+        initial={{ opacity: 0, scale: 0.98, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, x: -20 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="text-center py-4 flex flex-col justify-center items-center max-w-md mx-auto w-full min-h-[350px] flex-1 select-none"
     >
-        <div className="relative mb-5 inline-block">
-            <img
-                src="https://cdn-icons-png.flaticon.com/512/10103/10103980.png"
-                className="w-20 sm:w-24 mx-auto opacity-90 drop-shadow-md"
-                alt="Jaipur Palace Icon"
-            />
+        <div className="relative mb-6 inline-block mx-auto">
+            <div className="absolute inset-0 bg-gold/10 rounded-full blur-xl scale-150 animate-pulse" />
+            <div className="absolute inset-0 border border-gold/15 rounded-full animate-ping opacity-20 scale-110" />
+
+            <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-gradient-to-br from-[#003020] to-[#00150e] border-2 border-gold/40 flex items-center justify-center shadow-2xl relative z-10 transition-transform duration-300 hover:scale-105">
+                <Castle size={40} className="text-gold stroke-[1.5] drop-shadow-[0_4px_10px_rgba(214,175,55,0.3)]" />
+            </div>
         </div>
 
-        <h3 className="text-2xl sm:text-3xl font-serif text-royal-blue mb-1">
+        <h3 className="text-2xl sm:text-3xl font-serif text-royal-blue mb-2 font-bold tracking-wide leading-tight">
             Padharo Mhare Des
         </h3>
-        <p className="text-jaipur-dark/70 text-xs sm:text-sm font-medium mb-6 italic">
-            Experience the Timeless Royalty of the Pink City
+        <p className="text-jaipur-dark/80 text-xs tracking-wider uppercase font-sans font-medium mb-10">
+            Unlock The Timeless Royalty
         </p>
 
         <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onNext}
-            className="w-full py-4 bg-jaipur-dark text-white rounded-xl font-bold font-serif text-base sm:text-lg tracking-widest shadow-xl shadow-jaipur-dark/20 flex items-center justify-center gap-2"
+            className="w-full max-w-xs mx-auto bg-gradient-to-r from-jaipur-dark to-[#994113] text-white rounded-xl font-bold font-serif text-sm tracking-[3px] uppercase shadow-[0_10px_25px_rgba(153,65,19,0.3)] flex items-center justify-center gap-2 group transition-all duration-300 cursor-pointer py-5"
         >
-            BEGIN YOUR EXPERIENCE ➜
+            Book Ticket <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
         </motion.button>
-        <p className="mt-4 text-[9px] uppercase tracking-[2px] text-gray-400 font-bold">
-            Authorized Heritage Booking
-        </p>
+
+        <div className="mt-12 flex items-center justify-center gap-1.5 text-[9px] uppercase tracking-[3px] text-gray-400 font-bold font-sans">
+            <Lock size={10} className="text-gold" /> Authorized State Booking Gateway
+        </div>
     </motion.div>
 );
 
-const StepIndicator = ({ currentStep }) => (
-    <div className="flex justify-between mb-6 max-w-xs mx-auto">
-        {[1, 2, 3, 4].map((s) => (
-            <div
-                key={s}
-                className={`h-1 w-1/5 rounded-full transition-all duration-500 ${currentStep >= s ? "bg-jaipur-dark" : "bg-gray-100"
-                    }`}
-            />
-        ))}
-    </div>
-);
+const StepIndicator = ({ currentStep }) => {
+    const stepLabels = ["Date", "Tickets", "Guides", "Details"];
+    return (
+        <div className="mb-2 max-w-xs mx-auto w-full shrink-0">
+            <div className="flex justify-between items-center mb-1">
+                {stepLabels.map((label, index) => (
+                    <span key={index} className={`text-[10px] sm:text-[11px] uppercase tracking-widest font-bold transition-colors duration-300 ${currentStep >= index + 1 ? "text-jaipur-dark" : "text-gray-300"}`}>
+                        {label}
+                    </span>
+                ))}
+            </div>
+            <div className="flex justify-between gap-1.5">
+                {[1, 2, 3, 4].map((s) => (
+                    <div key={s} className={`h-1 w-full rounded-full transition-colors duration-500 ${currentStep >= s ? "bg-jaipur-dark shadow-sm" : "bg-gray-100"}`} />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 const LoadingOverlay = () => (
-    <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center z-50">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-jaipur-dark mb-3" />
-        <p className="font-bold text-sm text-jaipur-dark animate-pulse">Confirming Royalty...</p>
-    </div>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 bg-white/85 backdrop-blur-sm flex flex-col items-center justify-center z-50">
+        <div className="w-12 h-12 border-4 border-gold/30 border-t-royal-blue rounded-full animate-spin mb-4 shadow-lg" />
+        <p className="font-serif font-bold text-sm tracking-widest text-royal-blue uppercase animate-pulse">Generating Secure Ledger...</p>
+    </motion.div>
 );
