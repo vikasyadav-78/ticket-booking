@@ -37,17 +37,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* FIX: Pure CSS Scrollbar Hide Utility जो हर ब्राउज़र पर काम करेगी */
-.no-scrollbar::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
-}
 
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
 
-/* Background Mandala Texture Setup */
+  
 .bg-mandala {
   background-image: url('https://www.transparenttextures.com/patterns/mandala-light.png');
   background-repeat: repeat;
@@ -76,6 +68,9 @@ img {
   transform: translateY(-8px);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
 }
+
+
+
 
 @keyframes floatUpDown {
   0% { transform: translateY(0px) rotate(-8deg); }

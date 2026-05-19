@@ -65,15 +65,12 @@ export default function TicketCounter({ tickets, onNext, onBack }) {
             exit={{ opacity: 0, y: -12 }}
             className="w-full space-y-5"
         >
-            {/* Header Section */}
             <div className="relative">
-                <p className="text-[9px] tracking-[4px] text-gold uppercase font-bold mb-1">Pass Configuration</p>
-                <h2 className="text-2xl sm:text-3xl font-serif font-normal text-royal-blue leading-tight">Select Tickets</h2>
+                <h2 className="text-2xl sm:text-3xl font-serif font-normal text-royal-blue leading-tight">Select the number of visitors</h2>
                 <div className="h-[1px] w-12 bg-gold/40 mt-2" />
             </div>
 
-            {/* Scrolling Tickets Container */}
-            <div className="max-h-[220px] overflow-y-auto space-y-2.5 pr-0 rounded-xl border border-dashed border-gold/15 p-2 bg-sandstone/10 no-scrollbar">
+            <div className="w-full space-y-2.5 rounded-xl border border-dashed border-gold/15 p-2 bg-sandstone/10">
                 {ticketTypes.map((t, index) => {
                     const uniqueKey = t._id || t.id || index;
                     const isSelected = (counts[uniqueKey] || 0) > 0;
@@ -97,12 +94,10 @@ export default function TicketCounter({ tickets, onNext, onBack }) {
                             </div>
 
                             <div className="flex items-center justify-between w-full sm:w-auto gap-4 sm:gap-6 shrink-0">
-                                {/* FIX 1: Price Text - Bada aur prominent look (text-xl font-bold) */}
                                 <p className={`font-serif text-xl font-bold tracking-wide ${isSelected ? "text-gold drop-shadow-sm" : "text-royal-blue"}`}>
                                     ₹{t.price}
                                 </p>
 
-                                {/* Counter Controls */}
                                 <div className={`flex items-center gap-3 px-2 py-1.5 rounded-lg border transition-colors duration-300
                                     ${isSelected
                                         ? "bg-white/10 border-white/20"
@@ -114,7 +109,6 @@ export default function TicketCounter({ tickets, onNext, onBack }) {
                                         onClick={() => updateCount(uniqueKey, -1, t.maxPerBooking)}
                                         disabled={(counts[uniqueKey] || 0) <= 0}
                                     />
-                                    {/* FIX 2: Counter Value Text - Size badha kar text-xl font-bold kiya */}
                                     <div className={`w-8 text-center font-bold font-serif text-xl ${isSelected ? "text-white" : "text-royal-blue"}`}>
                                         {counts[uniqueKey] || 0}
                                     </div>
@@ -130,7 +124,6 @@ export default function TicketCounter({ tickets, onNext, onBack }) {
                 })}
             </div>
 
-            {/* Total Amount Card */}
             <div className="p-4 rounded-xl bg-gradient-to-r from-royal-blue to-[#0b2149] text-white shadow-xl relative overflow-hidden border border-gold/20">
                 <div className="absolute inset-0 opacity-[0.06] bg-mandala pointer-events-none scale-120"></div>
                 <div className="relative z-10 flex justify-between items-center">
@@ -142,8 +135,7 @@ export default function TicketCounter({ tickets, onNext, onBack }) {
                 </div>
             </div>
 
-            {/* Footer Buttons */}
-            <div className="flex justify-between items-center pt-2 gap-4">
+            <div className="flex justify-between items-center pt-2 gap-4 mb-5">
                 <button onClick={onBack} className="flex-1 py-3.5 font-bold font-serif text-xs text-jaipur-dark hover:text-royal-blue transition-colors uppercase tracking-[2px]">← Back</button>
                 <button disabled={total === 0} onClick={handleContinue} className={`flex-[2] py-3.5 rounded-xl font-serif text-xs font-bold tracking-[3px] transition-all duration-300 uppercase border ${total === 0 ? "bg-sandstone/50 text-gray-400 cursor-not-allowed border-gray-200/60" : "bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border-gold/30 cursor-pointer shadow-md shadow-jaipur-dark/10"}`}>CONTINUE ⟶</button>
             </div>

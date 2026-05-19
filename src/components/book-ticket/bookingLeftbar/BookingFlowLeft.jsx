@@ -4,13 +4,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function BookingFlowLeft({ place, itemVariants }) {
-    return ( 
+    return (
         <motion.section
-            className="hidden lg:flex w-1/2 h-full bg-gradient-to-b from-royal-blue to-[#071633] flex-col items-center justify-between p-8 overflow-hidden select-none relative border-r border-gold/10"
+            className="hidden lg:flex w-1/2 h-full bg-gradient-to-b from-royal-blue to-[#071633] flex-col items-center justify-between p-8 overflow-hidden select-none relative border-r border-gold/10 shrink-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-        > 
+        >
             <div className="absolute inset-0 opacity-[0.12] bg-mandala pointer-events-none scale-105"></div>
 
             {/* Corner Luxury Flourishes */}
@@ -46,7 +46,8 @@ export default function BookingFlowLeft({ place, itemVariants }) {
                     "{place?.shortDescription}"
                 </motion.p>
             </div>
- 
+
+            {/* Bottom Image Wrapper */}
             <motion.div
                 variants={itemVariants}
                 whileHover={{ scale: 1.01, borderColor: "rgba(212,175,55,0.35)" }}
@@ -57,10 +58,10 @@ export default function BookingFlowLeft({ place, itemVariants }) {
                     height={320}
                     priority
                     alt={place?.name || "Place Image"}
-                    className="w-full h-full object-cover rounded-[18px]"
+                    className="w-full h-full object-cover rounded-[18px] select-none"
                     src={Array.isArray(place?.images) && place.images.length > 0 ? place.images[0] : "/images/hawaMahal.png"}
                 />
             </motion.div>
         </motion.section>
     );
-}
+} 

@@ -20,15 +20,13 @@ export default function SlotCard({ slots, selectedSlot, onSelect }) {
 
                 return (
                     <div key={cat} className="space-y-3">
-                        {/* Session Category Header - Font Size Improved */}
                         <div className="flex items-center gap-2 px-1 pt-1">
                             <span className="text-xs sm:text-[13px] font-bold text-gold uppercase tracking-[2px] font-serif">
-                                ✦ {cat} Sessions
+                                ✦ {cat} Slots
                             </span>
                             <div className="flex-1 h-[1px] bg-gradient-to-r from-gold/20 via-transparent to-transparent" />
                         </div>
 
-                        {/* Slots Layout Grid */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-1">
                             {filteredSlots.map((slot, index) => {
                                 const isFull = slot.available === 0;
@@ -38,7 +36,7 @@ export default function SlotCard({ slots, selectedSlot, onSelect }) {
                                 const getStatusText = () => {
                                     if (!slot.isAvailable && !isFull) return "⏳ EXPIRED";
                                     if (isFull) return "🚫 FULL BOOKED";
-                                    return `👤 ${slot.available} Passes Left`;
+                                    return `👤 ${slot.available} Seats Left`;
                                 };
 
                                 return (
@@ -59,12 +57,9 @@ export default function SlotCard({ slots, selectedSlot, onSelect }) {
                                             }`}
                                     >
                                         <div className="space-y-1.5">
-                                            {/* Pass Timing - Font Size Increased to text-base */}
                                             <p className={`font-serif text-base font-semibold tracking-wide ${isSelected ? "text-gold" : "text-royal-blue"}`}>
                                                 {slot.displayTime || slot.time}
                                             </p>
-
-                                            {/* Status Badge - Font Size Increased to text-[11px] */}
                                             <p className={`text-[11px] font-bold tracking-wider uppercase font-sans
                                                 ${isSelected ? "text-white/80" : ""}
                                                 ${isDisabled ? "text-gray-400" : isFull ? "text-red-500" : "text-jaipur-dark"}
@@ -72,19 +67,11 @@ export default function SlotCard({ slots, selectedSlot, onSelect }) {
                                                 {getStatusText()}
                                             </p>
                                         </div>
-
-                                        {/* Royal Custom Radio Selector Ring - Slightly adjusted layout size */}
                                         <div className={`w-4.5 h-4.5 rounded-full border flex items-center justify-center transition-colors duration-300 shrink-0
-                                            ${isSelected
-                                                ? "border-gold bg-gold"
-                                                : "border-royal-blue/20 bg-sandstone/30"
-                                            }`}
-                                        >
-                                            {isSelected && (
-                                                <div className="w-2 h-2 bg-royal-blue rounded-full" />
-                                            )}
+                                            ${isSelected ? "border-gold bg-gold" : "border-royal-blue/20 bg-sandstone/30"}`}>
+                                            {isSelected && (<div className="w-2 h-2 bg-royal-blue rounded-full" />)}
                                         </div>
-                                    </motion.button>
+                                    </motion.button>    
                                 );
                             })}
                         </div>

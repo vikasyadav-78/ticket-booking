@@ -70,16 +70,16 @@ export default function Page() {
 
     return (
         <motion.div
-            className="fixed inset-0 flex bg-sandstone overflow-hidden z-50 flex-col"
+            className="flex bg-sandstone flex-col h-screen w-screen max-h-screen overflow-hidden fixed inset-0 z-50"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-        > 
+        >
             <div className="w-full bg-[#071633] border-b border-gold/10 px-4 sm:px-6 py-2 flex items-center justify-between z-50 shrink-0 select-none">
                 <div className="flex items-center gap-1.5 text-[9px] uppercase tracking-[3px] text-sandstone/60 font-bold font-sans">
                     <ShieldCheck size={11} className="text-gold animate-pulse" /> Official Booking Counter
                 </div>
- 
+
                 <button
                     onClick={() => router.push("/")}
                     className="inline-flex items-center gap-1 text-[10px] uppercase font-sans font-bold tracking-[2px] text-white/70 hover:text-white bg-white/5 hover:bg-red-600 px-3 py-1 rounded-lg border border-white/10 hover:border-red-500/20 transition-all duration-300 cursor-pointer"
@@ -87,20 +87,19 @@ export default function Page() {
                     Exit Portal <X size={12} />
                 </button>
             </div>
- 
-            <div className="w-full flex-1 flex overflow-hidden">
-                <BookingFlowLeft place={place} itemVariants={itemVariants} />
 
+            <div className="w-full flex flex-col lg:flex-row flex-1 h-[calc(100vh-37px)] max-h-[calc(100vh-37px)] overflow-y-auto lg:overflow-hidden bg-[#f8f4ed]">
+                <BookingFlowLeft place={place} itemVariants={itemVariants} />
+ 
                 <section
                     data-lenis-prevent
-                    style={{ overscrollBehavior: "contain" }}
-                    className="w-full lg:w-1/2 h-full overflow-y-auto bg-[#f8f4ed] flex items-center justify-center no-scrollbar p-4 sm:p-6 lg:p-8 relative"
+                    className="w-full lg:w-1/2 bg-[#f8f4ed] h-full overflow-y-auto overflow-x-hidden flex flex-col justify-start items-stretch custom-scrollbar"
                 >
                     <motion.div
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="w-full max-w-xl mx-auto h-full flex items-center justify-center"
+                        className="w-full min-h-full flex items-start justify-center p-4 sm:p-6 lg:p-8"
                     >
                         <BookingFlowRight />
                     </motion.div>

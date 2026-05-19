@@ -11,6 +11,10 @@ const api = axios.create({
     },
 });
 
+api.interceptors.request.use((req) => {
+    console.log("FINAL URL =>", req.baseURL + req.url);
+    return req;
+});
 
 api.interceptors.response.use(
     (response) => response,
@@ -19,7 +23,6 @@ api.interceptors.response.use(
         console.log(error);
         const message = error.response?.data?.message || error.message;
         console.error("API Error:", message);
-
         return Promise.reject(error);
     }
 );

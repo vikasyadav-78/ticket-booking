@@ -78,7 +78,7 @@ export default function BookingFlowRight() {
     };
 
     return (
-        <div className="bg-[#f8f4ed] overflow-hidden relative w-full flex flex-col h-screen min-h-screen border-l border-gold/10 shadow-2xl">
+        <div className="bg-[#f8f4ed] relative w-full flex flex-col min-h-full h-full lg:border-l border-gold/10">
             {/* <header className="bg-gradient-to-b from-royal-blue to-[#08203e] text-center relative overflow-hidden shrink-0 border-b-4 border-jaipur-dark shadow-md">
                 <div className="absolute inset-0 opacity-[0.04] bg-mandala pointer-events-none"></div>
                 <h2 className="text-white font-serif text-base sm:text-lg tracking-[4px] uppercase relative z-10 font-bold drop-shadow-md mt-4 py-2">
@@ -86,8 +86,8 @@ export default function BookingFlowRight() {
                 </h2>
                 <div className="h-[2px] w-12 bg-gold mx-auto mt-1 rounded-full relative z-10" />
             </header> */}
- 
-            <div className="p-6 sm:p-10 lg:p-16 flex-1 overflow-y-auto custom-scrollbar relative flex flex-col min-h-0 justify-start items-stretch w-full max-w-2xl mx-auto">
+
+            <div className="p-6 sm:p-10 lg:p-16 flex-1 flex flex-col justify-center items-stretch w-full max-w-2xl mx-auto min-h-0">
                 {step > 0 && <StepIndicator currentStep={step} />}
 
                 <AnimatePresence mode="wait">
@@ -105,7 +105,6 @@ export default function BookingFlowRight() {
                             </div>
                         </motion.div>
                     ) : (
-                        
                         <div className="w-full h-full flex flex-col justify-between items-stretch flex-1 min-h-0">
                             {renderStep(step, {
                                 setStep,
@@ -176,7 +175,7 @@ const StartStep = ({ onNext }) => (
 const StepIndicator = ({ currentStep }) => {
     const stepLabels = ["Date", "Tickets", "Guides", "Details"];
     return (
-        <div className="mb-2 max-w-xs mx-auto w-full shrink-0">
+        <div className="mb-5 max-w-xs mx-auto w-full shrink-0" style={{ marginTop: "-70px" }}>
             <div className="flex justify-between items-center mb-1">
                 {stepLabels.map((label, index) => (
                     <span key={index} className={`text-[10px] sm:text-[11px] uppercase tracking-widest font-bold transition-colors duration-300 ${currentStep >= index + 1 ? "text-jaipur-dark" : "text-gray-300"}`}>

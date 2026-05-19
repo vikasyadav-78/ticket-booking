@@ -32,7 +32,7 @@ export default function GuideSelector({ addons, onNext, onBack }) {
             [id]: Math.max(0, (prev[id] || 0) + value),
         }));
     };
-
+console.log(updateCount)
     const addonTotal = useMemo(() => {
         return addonList.reduce((acc, item) => {
             const id = item.id || item._id;
@@ -41,6 +41,8 @@ export default function GuideSelector({ addons, onNext, onBack }) {
     }, [addonList, counts]);
 
     const grandTotal = ticketTotal + addonTotal;
+    console.log(addonTotal)
+    console.log(grandTotal)
 
     const handleContinue = () => {
         dispatch(setAddons(counts));
@@ -73,30 +75,25 @@ export default function GuideSelector({ addons, onNext, onBack }) {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            className="w-full space-y-5"
-        >
-            {/* Header Section */}
+            className="w-full space-y-5">
             <div className="flex justify-between items-end mb-2">
                 <div className="relative">
-                    <p className="text-[9px] tracking-[4px] text-gold uppercase font-bold mb-1">Services Marketplace</p>
-                    <h2 className="text-2xl sm:text-3xl font-serif font-normal text-royal-blue leading-tight">Enhance Visit</h2>
+                    <h2 className="text-2xl sm:text-3xl font-serif font-normal text-royal-blue leading-tight">Select your Add-ons</h2>
                     <div className="h-[1px] w-12 bg-gold/40 mt-2" />
                 </div>
                 <button onClick={handleSkip} className="text-jaipur-dark hover:text-royal-blue font-serif font-bold text-[10px] uppercase tracking-widest border-b border-gold/40 pb-0.5 transition-all cursor-pointer shrink-0">Skip Services ⟶</button>
             </div>
-
-            {/* Scrolling Addons Container */}
-            <div className="max-h-[220px] overflow-y-auto space-y-2.5 pr-0 rounded-xl border border-dashed border-gold/15 p-2 bg-sandstone/10 no-scrollbar">
+ 
+            <div className="w-full space-y-2.5 rounded-xl border border-dashed border-gold/15 p-2 bg-sandstone/10">
                 {addonList.map((item, index) => {
                     const itemId = item.id || item._id;
                     const isSelected = (counts[itemId] || 0) > 0;
-                    
                     return (
                         <motion.div
                             key={itemId || index}
                             className={`flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 rounded-xl transition-all duration-300 border text-left select-none w-full gap-2
-                                ${isSelected 
-                                    ? "border-gold bg-gradient-to-br from-royal-blue to-[#112952] text-white shadow-lg" 
+                                ${isSelected
+                                    ? "border-gold bg-gradient-to-br from-royal-blue to-[#112952] text-white shadow-lg"
                                     : "border-gold/15 bg-white hover:border-gold/40 text-royal-blue"
                                 }`}
                         >
@@ -109,31 +106,27 @@ export default function GuideSelector({ addons, onNext, onBack }) {
                                 </p>
                             </div>
 
-                            <div className="flex items-center justify-between w-full sm:w-auto gap-4 sm:gap-6 shrink-0">
-                                {/* FIX 1: Price Text - Big and prominent look (text-xl font-bold) */}
+                            <div className="flex items-center justify-between w-full sm:w-auto gap-4 sm:gap-6 shrink-0"> 
                                 <p className={`font-serif text-xl font-bold tracking-wide ${isSelected ? "text-gold drop-shadow-sm" : "text-royal-blue"}`}>
                                     ₹{item.price}
                                 </p>
-                                
-                                {/* Counter Controls using official CounterBtn */}
                                 <div className={`flex items-center gap-3 px-2 py-1.5 rounded-lg border transition-colors duration-300
-                                    ${isSelected 
-                                        ? "bg-white/10 border-white/20" 
+                                    ${isSelected
+                                        ? "bg-white/10 border-white/20"
                                         : "bg-sandstone/80 border-gold/15"
                                     }`}
                                 >
-                                    <CounterBtn 
-                                        text="-" 
-                                        onClick={() => updateCount(itemId, -1)} 
-                                        disabled={(counts[itemId] || 0) <= 0} 
+                                    <CounterBtn
+                                        text="-"
+                                        onClick={() => updateCount(itemId, -1)}
+                                        disabled={(counts[itemId] || 0) <= 0}
                                     />
-                                    {/* FIX 2: Counter Value Text - Size badha kar text-xl font-bold kiya */}
                                     <div className={`w-8 text-center font-bold font-serif text-xl ${isSelected ? "text-white" : "text-royal-blue"}`}>
                                         {counts[itemId] || 0}
                                     </div>
-                                    <CounterBtn 
-                                        text="+" 
-                                        onClick={() => updateCount(itemId, 1)} 
+                                    <CounterBtn
+                                        text="+"
+                                        onClick={() => updateCount(itemId, 1)}
                                     />
                                 </div>
                             </div>
@@ -141,8 +134,7 @@ export default function GuideSelector({ addons, onNext, onBack }) {
                     );
                 })}
             </div>
-
-            {/* Total Invoice Card */}
+ 
             <div className="p-4 rounded-xl bg-gradient-to-r from-royal-blue to-[#0b2149] text-white shadow-xl relative overflow-hidden border border-gold/20">
                 <div className="absolute inset-0 opacity-[0.06] bg-mandala pointer-events-none scale-120"></div>
                 <div className="relative z-10 space-y-2.5">
@@ -159,8 +151,7 @@ export default function GuideSelector({ addons, onNext, onBack }) {
                     </div>
                 </div>
             </div>
-
-            {/* Footer Action Buttons */}
+ 
             <div className="flex justify-between items-center pt-2 gap-4">
                 <button onClick={onBack} className="flex-1 py-3.5 font-bold font-serif text-xs text-jaipur-dark hover:text-royal-blue transition-colors uppercase tracking-[2px]">← Back</button>
                 <button onClick={handleContinue} className="flex-[2] py-3.5 rounded-xl bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border border-gold/30 font-serif text-xs font-bold tracking-[3px] transition-all duration-300 uppercase shadow-md shadow-jaipur-dark/10 cursor-pointer">PROCEED TO DETAILS ⟶</button>

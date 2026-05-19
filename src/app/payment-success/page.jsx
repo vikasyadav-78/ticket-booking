@@ -78,7 +78,7 @@ function SuccessContent() {
  
                     <div className="p-4 sm:p-6 pb-3 sm:pb-4 text-center space-y-1 sm:space-y-2">
                         <div className="space-y-0.5">
-                            <span className="text-[9px] tracking-[4px] text-jaipur-dark uppercase font-bold font-sans block">Official Gate Pass</span>
+                            <span className="text-[9px] tracking-[4px] text-jaipur-dark uppercase font-bold font-sans block">Official Bookinig Ticket</span>
                             <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl text-royal-blue font-bold tracking-wide truncate px-4">
                                 {booking?.placeId?.name || "Heritage Monument"}
                             </h3>
@@ -86,15 +86,14 @@ function SuccessContent() {
                         </div>
 
                         <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-gold/30 to-transparent mx-auto" />
-
-                        {/* Grid Data Parameters with King Size Typography */}
+ 
                         <div className="grid grid-cols-2 gap-y-3 sm:gap-y-4 gap-x-4 pt-1 sm:pt-2 px-4 text-left">
                             <div>
                                 <span className="text-[10px] uppercase tracking-wider text-gray-400 block font-sans font-medium">Date of Visit</span>
                                 <span className="text-xs sm:text-base font-serif font-bold text-royal-blue tracking-wide block truncate">{formattedDate}</span>
                             </div>
                             <div className="text-right">
-                                <span className="text-[10px] uppercase tracking-wider text-gray-400 block font-sans font-medium">Session Entry</span>
+                                <span className="text-[10px] uppercase tracking-wider text-gray-400 block font-sans font-medium">Visiting Time</span>
                                 <span className="text-xs sm:text-base font-serif font-bold text-royal-blue tracking-wide block">{formattedTime}</span>
                             </div>
                             <div>

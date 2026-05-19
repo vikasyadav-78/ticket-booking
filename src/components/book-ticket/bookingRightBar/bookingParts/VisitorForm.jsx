@@ -17,9 +17,7 @@ export default function VisitorForm({ onSubmit, onBack, loading }) {
         return errs;
     }, [formData]);
 
-    const isFormValid = formData.name.length >= 3 &&
-        /^\S+@\S+\.\S+$/.test(formData.email) &&
-        formData.phone.length === 10;
+    const isFormValid = formData.name.length >= 3 && /^\S+@\S+\.\S+$/.test(formData.email) && formData.phone.length === 10;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,7 +32,6 @@ export default function VisitorForm({ onSubmit, onBack, loading }) {
         setFormData({ ...formData, phone: value });
     };
 
-    // UPGRADED INPUT CLASSES WITH PREMIUM HOVER EFFECTS
     const inputClasses = (fieldName) => `w-full p-3.5 border rounded-xl outline-none text-sm font-medium font-serif text-royal-blue transition-all duration-300 placeholder:text-gray-300 placeholder:font-normal bg-sandstone/10
         ${touched[fieldName] && errors[fieldName]
             ? "border-red-400 focus:border-red-500 bg-red-50/20"
@@ -49,16 +46,13 @@ export default function VisitorForm({ onSubmit, onBack, loading }) {
             exit={{ opacity: 0, y: -12 }}
             className="w-full space-y-5"
         >
-            {/* Header section */}
             <div className="relative">
-                <p className="text-[9px] tracking-[4px] text-gold uppercase font-bold mb-1">Identity Registry</p>
-                <h2 className="text-2xl sm:text-3xl font-serif font-normal text-royal-blue leading-tight">Visitor Details</h2>
+
+                <h2 className="text-2xl sm:text-3xl font-serif font-normal text-royal-blue leading-tight">Enter your personal details</h2>
                 <div className="h-[1px] w-12 bg-gold/40 mt-2" />
             </div>
 
-            {/* Input Grid Area */}
             <div className="space-y-4">
-                {/* Full Name Node */}
                 <div className="space-y-1">
                     <label className="text-[9px] font-bold text-royal-blue/60 uppercase tracking-[2px] block ml-1">Full Name</label>
                     <input
@@ -66,13 +60,12 @@ export default function VisitorForm({ onSubmit, onBack, loading }) {
                         value={formData.name}
                         onBlur={() => setTouched({ ...touched, name: true })}
                         className={inputClasses("name")}
-                        placeholder="e.g. Vikas Yadav"
+                        placeholder="Your Name "
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     />
                     {touched.name && errors.name && <p className="text-[10px] text-red-500 font-bold ml-1 tracking-wide">✦ {errors.name}</p>}
                 </div>
 
-                {/* Email Address Node */}
                 <div className="space-y-1">
                     <label className="text-[9px] font-bold text-royal-blue/60 uppercase tracking-[2px] block ml-1">Email Address</label>
                     <input
@@ -81,13 +74,12 @@ export default function VisitorForm({ onSubmit, onBack, loading }) {
                         value={formData.email}
                         onBlur={() => setTouched({ ...touched, email: true })}
                         className={inputClasses("email")}
-                        placeholder="vikas@example.com"
+                        placeholder="Email Addresh"
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     />
                     {touched.email && errors.email && <p className="text-[10px] text-red-500 font-bold ml-1 tracking-wide">✦ {errors.email}</p>}
                 </div>
 
-                {/* Mobile Number Node */}
                 <div className="space-y-1">
                     <label className="text-[9px] font-bold text-royal-blue/60 uppercase tracking-[2px] block ml-1">Mobile Number</label>
                     <div className="relative">
@@ -99,7 +91,7 @@ export default function VisitorForm({ onSubmit, onBack, loading }) {
                             value={formData.phone}
                             onBlur={() => setTouched({ ...touched, phone: true })}
                             className={`${inputClasses("phone")} pl-14 font-sans`}
-                            placeholder="7878402570"
+                            placeholder="phone number"
                             onChange={handlePhoneChange}
                         />
                     </div>
@@ -107,7 +99,6 @@ export default function VisitorForm({ onSubmit, onBack, loading }) {
                 </div>
             </div>
 
-            {/* Verification Info Box styled with high-end tint */}
             <div className="bg-sandstone/60 p-4 rounded-xl border border-gold/15 flex gap-3 items-center select-none">
                 <span className="text-xl filter drop-shadow-sm">📧</span>
                 <p className="text-[11px] text-royal-blue/70 leading-relaxed font-serif italic">
@@ -115,14 +106,12 @@ export default function VisitorForm({ onSubmit, onBack, loading }) {
                 </p>
             </div>
 
-            {/* ACTION GATEWAYS FOOTER BUTTONS */}
             <div className="flex justify-between items-center pt-2 gap-4">
                 <button
                     type="button"
                     onClick={onBack}
-                    className="flex-1 py-3.5 font-bold font-serif text-xs text-jaipur-dark hover:text-royal-blue transition-colors uppercase tracking-[2px]"
-                >
-                    ← Edit Pass
+                    className="flex-1 py-3.5 font-bold font-serif text-xs text-jaipur-dark hover:text-royal-blue transition-colors uppercase tracking-[2px]">
+                    ← Edit ticket
                 </button>
 
                 <button
