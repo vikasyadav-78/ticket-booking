@@ -2,7 +2,7 @@
 
 import React, { Suspense } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion"; // Proper transitions integrated
+import { motion } from "framer-motion"; 
 import { AlertCircle, ArrowLeft } from "lucide-react";
 import Status from "@/components/book-ticket/bookingRightBar/bookingParts/Status";
 
@@ -13,47 +13,36 @@ function FailureContent() {
         router.push("/book-tickets");
     };
 
-    return (
-        // Strict Full Screen Viewport - Restricts content from clipping or scrolling
+    return ( 
         <div className="h-screen w-full flex items-center justify-center px-4 py-3 bg-sandstone relative overflow-hidden select-none">
-            {/* Soft Background Mandala Watermark Pattern */}
             <div className="absolute inset-0 opacity-[0.03] bg-mandala pointer-events-none scale-105"></div>
-
-            {/* Balanced dynamic vertical stack container */}
             <div className="w-full max-w-xl text-center z-10 flex flex-col justify-center items-center space-y-4 max-h-full">
-
-                {/* CORE PREMIUM BOX CARD */}
                 <motion.div
                     initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ type: "spring", stiffness: 140, damping: 18 }}
                     className="relative w-full bg-white p-6 sm:p-10 rounded-[2.5rem] border border-red-200/40 shadow-[0_20px_50px_rgba(195,90,64,0.05)] overflow-hidden flex flex-col"
-                >
-                    {/* Inner Premium Decorative Royal Borders */}
+                > 
                     <div className="absolute inset-2 border border-red-500/5 rounded-[2rem] pointer-events-none"></div>
                     <div className="absolute inset-3 border border-dashed border-red-500/5 rounded-[2rem] pointer-events-none"></div>
-
-                    {/* Top Tiny Error Alert Ribbon Accent */}
+ 
                     <div className="flex justify-center mb-1 shrink-0">
                         <div className="inline-flex items-center gap-1.5 bg-red-50 border border-red-200/50 px-3 py-1 rounded-full text-red-600 text-[10px] uppercase tracking-widest font-sans font-bold shadow-sm">
                             <AlertCircle size={12} className="animate-pulse" /> Transaction Aborted
                         </div>
                     </div>
-
-                    {/* Shared Status Custom Visual Component Layer */}
+ 
                     <div className="my-2 py-2 shrink-0">
                         <Status
                             status="failed"
                             onRetry={handleRetry}
                         />
                     </div>
-
-                    {/* SEPARATION DASHED LINE ACROSS THE BASE */}
+ 
                     <div className="relative w-full px-4 my-2 shrink-0">
                         <div className="w-full border-t border-dashed border-red-200/30"></div>
                     </div>
-
-                    {/* CONTROL ACTION ROUTING TRIGGER */}
+ 
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -68,8 +57,7 @@ function FailureContent() {
                         </button>
                     </motion.div>
                 </motion.div>
-
-                {/* Technical Grievance Label Stamp */}
+ 
                 <div className="text-center font-serif italic text-[10px] text-royal-blue/30 select-none tracking-wide">
                     If funds were deducted, ledger credits will reverse automatically via Easebuzz within 24 hours.
                 </div>

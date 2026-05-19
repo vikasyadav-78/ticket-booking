@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { motion } from "framer-motion"; // Proper import integrated
+import { motion } from "framer-motion";  
 import { Download, CheckCheck } from "lucide-react";
 import { useBookingById } from "@/lib/queries/useBooking";
 import api from "@/lib/api";

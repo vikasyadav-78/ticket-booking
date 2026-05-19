@@ -10,6 +10,7 @@ import TicketCounter from "./bookingParts/TicketCounter";
 import GuideSelector from "./bookingParts/GuideSelector";
 import VisitorForm from "./bookingParts/VisitorForm";
 import { ArrowRight, Lock, Castle } from "lucide-react";
+import FullPageLoader from "@/components/ui/FullPageLoader";
 
 export default function BookingFlowRight() {
     const [step, setStep] = useState(0);
@@ -78,7 +79,7 @@ export default function BookingFlowRight() {
     };
 
     return (
-        <div className="bg-[#f8f4ed] relative w-full flex flex-col min-h-full h-full lg:border-l border-gold/10">
+        <div className="bg-[#f8f4ed] relative w-screen flex flex-col min-h-full h-full lg:border-l border-gold/10">
             {/* <header className="bg-gradient-to-b from-royal-blue to-[#08203e] text-center relative overflow-hidden shrink-0 border-b-4 border-jaipur-dark shadow-md">
                 <div className="absolute inset-0 opacity-[0.04] bg-mandala pointer-events-none"></div>
                 <h2 className="text-white font-serif text-base sm:text-lg tracking-[4px] uppercase relative z-10 font-bold drop-shadow-md mt-4 py-2">
@@ -116,8 +117,9 @@ export default function BookingFlowRight() {
                     )}
                 </AnimatePresence>
             </div>
-            {isSubmitting && <LoadingOverlay />}
-        </div>
+            {/* {isSubmitting && <LoadingOverlay />} */}
+            {isSubmitting && <FullPageLoader message="Generating Secure Ledger..." />}
+        </div>  
     );
 }
 

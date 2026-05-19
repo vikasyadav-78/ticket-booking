@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion"; // Proper animations toolkit integrated
+import { motion, AnimatePresence } from "framer-motion";  
 import BookNowBtn from "@/components/ui/BookNowBtn";
 import Banners from "@/components/Home/Banners";
 import Link from "next/link";

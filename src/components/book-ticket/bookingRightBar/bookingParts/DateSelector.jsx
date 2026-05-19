@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { usePlace } from "@/hooks/usePlace";
 import { useSlots } from "@/lib/queries/useSlot";
 import { setDate, setSlot } from "@/redux/features/booking/bookingSlice";
 import SlotCard from "./SlotCard";
+import FullPageLoader from "@/components/ui/FullPageLoader"; 
 
 export default function DateSelector({ onNext }) {
     const dispatch = useDispatch();
@@ -28,7 +29,6 @@ export default function DateSelector({ onNext }) {
     const processSlotsWithTimeCheck = () => {
         if (!slots || slots.length === 0) return [];
 
-        // SORTING THE SLOTS CHRONOLOGICALLY (09:00 -> 10:00 -> 14:00)
         const sortedSlots = [...slots].sort((a, b) => {
             const timeA = a.time || "00:00";
             const timeB = b.time || "00:00";
@@ -77,67 +77,68 @@ export default function DateSelector({ onNext }) {
     }
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="w-full h-full flex flex-col justify-start space-y-2 flex-1 relative"  >
-            <div className="space-y-4 shrink-0">
-                <div className="relative">
-                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-royal-blue leading-tight">
-                        Plan Your Visit
-                    </h2>
-                    <div className="h-[1px] w-12 bg-gold/40" />
+        <> 
+            <AnimatePresence mode="wait">
+                {isLoading && <FullPageLoader message="Fetching Imperial Hours..." />}
+            </AnimatePresence>
+
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="w-full h-full flex flex-col justify-start space-y-2 flex-1 relative"  >
+                <div className="space-y-4 shrink-0">
+                    <div className="relative">
+                        <h2 className="text-xl sm:text-2xl font-serif font-bold text-royal-blue leading-tight">
+                            Plan Your Visit
+                        </h2>
+                        <div className="h-[1px] w-12 bg-gold/40" />
+                    </div>
+
+                    <input
+                        type="date"
+                        min={today}
+                        value={selectedDate || ""}
+                        onChange={handleDateChange}
+                        className="w-full p-3.5 border border-gold/20 rounded-xl outline-none font-serif text-royal-blue bg-sandstone/10 focus:border-gold/50 focus:bg-white transition-all text-xs font-medium cursor-pointer shadow-inner mt-1"
+                    />
+                </div>
+                <div className="w-full flex-1 flex flex-col">
+                    <div className="w-full rounded-xl border border-dashed border-gold/15 p-3 bg-sandstone/5">
+                        {!isLoading && validatedSlots.length === 0 ? (
+                            <div className="py-12 text-center text-jaipur-dark/50 font-serif italic text-xs tracking-wider">
+                                No active passes available for this date.
+                            </div>
+                        ) : (
+                            <SlotCard
+                                slots={validatedSlots}
+                                selectedSlot={selectedSlot}
+                                onSelect={(slot) => {
+                                    if (slot.isAvailable) {
+                                        dispatch(setSlot(slot));
+                                    }
+                                }}
+                            />
+                        )}
+                    </div>
                 </div>
 
-                <input
-                    type="date"
-                    min={today}
-                    value={selectedDate || ""}
-                    onChange={handleDateChange}
-                    className="w-full p-3.5 border border-gold/20 rounded-xl outline-none font-serif text-royal-blue bg-sandstone/10 focus:border-gold/50 focus:bg-white transition-all text-xs font-medium cursor-pointer shadow-inner mt-1"
-                />
-            </div>
-            <div className="w-full flex-1 flex flex-col">
-                {/* यहाँ से सारी max-h पाबंदियाँ हटा दी हैं ताकि यह पूरे राइट सेक्शन के साथ बहे */}
-                <div className="w-full rounded-xl border border-dashed border-gold/15 p-3 bg-sandstone/5">
-                    {isLoading ? (
-                        <div className="py-12 text-center text-royal-blue/40 font-serif italic text-xs tracking-wider animate-pulse">
-                            Fetching Imperial Hours...
-                        </div>
-                    ) : validatedSlots.length === 0 ? (
-                        <div className="py-12 text-center text-jaipur-dark/50 font-serif italic text-xs tracking-wider text-center">
-                            No active passes available for this date.
-                        </div>
-                    ) : (
-                        <SlotCard
-                            slots={validatedSlots}
-                            selectedSlot={selectedSlot}
-                            onSelect={(slot) => {
-                                if (slot.isAvailable) {
-                                    dispatch(setSlot(slot));
-                                }
-                            }}
-                        />
-                    )}
+                <div className="pt-2 shrink-0 w-full mt-6">
+                    <motion.button
+                        whileHover={selectedSlot ? { scale: 1.01 } : {}}
+                        whileTap={selectedSlot ? { scale: 0.99 } : {}}
+                        disabled={!selectedSlot}
+                        onClick={onNext}
+                        className={`w-full py-4 px-3 rounded-xl font-serif text-xs font-bold tracking-[3px] transition-all duration-300 uppercase border block mb-5
+                            ${!selectedSlot
+                                ? "bg-sandstone/40 text-gray-400 cursor-not-allowed border-gray-200/50"
+                                : "bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border-gold/30 cursor-pointer shadow-md shadow-jaipur-dark/5"
+                            }`}
+                    >
+                        {selectedSlot ? `Confirm ${selectedSlot.displayTime || selectedSlot.time} Entry ⟶` : "SELECT TIMING AT GATE"}
+                    </motion.button>
                 </div>
-            </div>
-
-            <div className="pt-2 shrink-0 w-full mt-6">
-                <motion.button
-                    whileHover={selectedSlot ? { scale: 1.01 } : {}}
-                    whileTap={selectedSlot ? { scale: 0.99 } : {}}
-                    disabled={!selectedSlot}
-                    onClick={onNext}
-                    className={`w-full py-4 rounded-xl font-serif text-xs font-bold tracking-[3px] transition-all duration-300 uppercase border block mb-5
-                        ${!selectedSlot
-                            ? "bg-sandstone/40 text-gray-400 cursor-not-allowed border-gray-200/50"
-                            : "bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border-gold/30 cursor-pointer shadow-md shadow-jaipur-dark/5"
-                        }`}
-                >
-                    {selectedSlot ? `Confirm ${selectedSlot.displayTime || selectedSlot.time} Entry ⟶` : "SELECT TIMING AT GATE"}
-                </motion.button>
-            </div>
-        </motion.div>
+            </motion.div>
+        </>
     );
 }

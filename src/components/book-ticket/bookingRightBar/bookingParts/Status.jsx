@@ -4,8 +4,6 @@ import { useRouter } from 'next/navigation';
 
 export default function Status({ status, data, onRetry }) {
     const router = useRouter();
-
-    // Agar data missing ho toh crash na kare isliye optional chaining (?) use ki hai
     const visitorName = data?.visitorInfo?.name || data?.name || "Guest";
     const visitorEmail = data?.visitorInfo?.email || data?.email || "your email";
     const bookingDate = data?.date || "N/A";
@@ -15,22 +13,17 @@ export default function Status({ status, data, onRetry }) {
         <div className="text-center py-6 text-black">
             {status === "success" ? (
                 <div className="animate-in fade-in zoom-in duration-500">
-                    {/* Success Icon */}
                     <div className="flex justify-center mb-6">
                         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
                             <span className="text-5xl text-green-600">✓</span>
                         </div>
                     </div>
-
                     <h2 className="text-3xl font-bold text-green-600 mb-2">Booking Confirmed!</h2>
                     <p className="text-gray-600 mb-8 font-medium">
                         Your ticket has been sent to <br />
                         <span className="text-black font-semibold">{visitorEmail}</span>
                     </p>
-
-                    {/* Ticket Card Design */}
                     <div className="bg-white p-6 rounded-2xl border-2 border-dashed border-gray-300 text-left mb-8 relative overflow-hidden">
-                        {/* Side Cut-outs for Ticket Look */}
                         <div className="absolute top-1/2 -left-3 w-6 h-6 bg-[#f6f1e8] rounded-full border-r-2 border-gray-300 transform -translate-y-1/2"></div>
                         <div className="absolute top-1/2 -right-3 w-6 h-6 bg-[#f6f1e8] rounded-full border-l-2 border-gray-300 transform -translate-y-1/2"></div>
 
@@ -56,7 +49,6 @@ export default function Status({ status, data, onRetry }) {
                         </div>
                     </div>
 
-                    {/* Action Buttons */}
                     <div className="space-y-3">
                         <button
                             onClick={() => window.print()}
@@ -74,7 +66,6 @@ export default function Status({ status, data, onRetry }) {
                 </div>
             ) : (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    {/* Failure Icon */}
                     <div className="flex justify-center mb-6">
                         <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center">
                             <span className="text-5xl text-red-600">✕</span>

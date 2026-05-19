@@ -1,9 +1,8 @@
 "use client";
 
 import React from 'react';
-import { motion } from "framer-motion"; // Integrated for fluid cascade controls
-
-// Master transition logic container for layout items
+import { motion } from "framer-motion"; 
+ 
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

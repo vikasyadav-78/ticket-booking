@@ -7,9 +7,7 @@ import { Scale, FileWarning, CalendarDays, Ban, ArrowLeft } from "lucide-react";
 export default function TermsAndConditions() {
     return (
         <div className="min-h-screen bg-sandstone/20 py-12 px-4 sm:px-6 lg:px-8 select-none">
-            {/* Soft Background Accent Lines */}
             <div className="absolute inset-0 opacity-[0.03] bg-mandala pointer-events-none scale-105" />
-
             <div className="max-w-4xl mx-auto z-10 relative space-y-8">
 
                 {/* Back to Gateway Trigger */}
@@ -18,8 +16,7 @@ export default function TermsAndConditions() {
                         <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" /> Back To Home Gateway
                     </Link>
                 </div> */}
-
-                {/* Main Header Descriptor */}
+ 
                 <div className="text-center space-y-2">
                     <div className="flex justify-center mb-2">
                         <div className="h-14 w-14 rounded-full bg-royal-blue/10 border border-gold/20 flex items-center justify-center text-royal-blue shadow-inner">
@@ -31,15 +28,12 @@ export default function TermsAndConditions() {
                     <div className="h-[1px] w-16 bg-gold/40 mx-auto mt-3" />
                     <p className="text-xs text-gray-400 font-sans mt-1">Effective Date: May 2026</p>
                 </div>
-
-                {/* Terms Main Framework Document */}
                 <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     className="bg-white rounded-3xl border border-gold/20 p-6 sm:p-10 shadow-[0_20px_50px_rgba(11,33,73,0.04)] space-y-8 text-left"
                 >
-                    {/* Agreement Node */}
                     <div className="space-y-3">
                         <div className="flex items-center gap-2 text-royal-blue">
                             <FileWarning size={20} className="text-gold shrink-0" />
@@ -49,8 +43,6 @@ export default function TermsAndConditions() {
                             By accessing, reviewing, or booking admission entry passes through this portal, you explicitly acknowledge and agree to comply with these comprehensive Terms and Conditions. If you disagree with any segment of this legal framework, you must cease processing ticket reservations immediately.
                         </p>
                     </div>
-
-                    {/* Booking & Allocation Node */}
                     <div className="space-y-3">
                         <div className="flex items-center gap-2 text-royal-blue">
                             <CalendarDays size={20} className="text-gold shrink-0" />
@@ -65,8 +57,6 @@ export default function TermsAndConditions() {
                             <li>Children under the age of 5 receive complimentary access but must be declared during checkout bounds.</li>
                         </ul>
                     </div>
-
-                    {/* No Cancellation/Refund Node */}
                     <div className="space-y-3">
                         <div className="flex items-center gap-2 text-royal-blue">
                             <Ban size={20} className="text-gold shrink-0" />
@@ -77,7 +67,6 @@ export default function TermsAndConditions() {
                         </p>
                     </div>
 
-                    {/* Code of Conduct Node */}
                     <div className="space-y-3">
                         <div className="flex items-center gap-2 text-royal-blue">
                             <Scale size={20} className="text-gold shrink-0" />
@@ -88,17 +77,14 @@ export default function TermsAndConditions() {
                         </p>
                     </div>
 
-                    {/* Liability Disclaimer */}
                     <div className="space-y-3 border-t border-gold/15 pt-6">
                         <h3 className="text-base font-serif font-bold text-royal-blue tracking-wide">5. Limitation of Liability</h3>
                         <p className="text-xs sm:text-sm leading-[1.6] text-gray-500 font-sans pl-1">
                             The administration reserves the right to modify operating hours or temporarily close trails due to extreme weather conditions, critical security protocols, or VIP updates. In such exceptional instances, entry updates will be communicated, and compensation layouts will fall strictly under governing board jurisdiction.
                         </p>
                     </div>
-
                 </motion.div>
 
-                {/* Footer Legal Label */}
                 <div className="text-center font-serif italic text-xs text-royal-blue/50 select-none">
                     © 2026 Jaipur Heritage Reserves Portal. All Rights Reserved.
                 </div>

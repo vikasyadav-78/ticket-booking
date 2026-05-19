@@ -1,8 +1,9 @@
 "use client";
 import { useState, useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { setVisitorInfo } from "@/redux/features/booking/bookingSlice";
+import FullPageLoader from "@/components/ui/FullPageLoader";
 
 export default function VisitorForm({ onSubmit, onBack, loading }) {
     const dispatch = useDispatch();
@@ -39,98 +40,98 @@ export default function VisitorForm({ onSubmit, onBack, loading }) {
         }`;
 
     return (
-        <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            className="w-full space-y-5"
-        >
-            <div className="relative">
+        <>
+            <AnimatePresence mode="wait">
+                {loading && <FullPageLoader message="Payment Processing ..." />}
+            </AnimatePresence>
 
-                <h2 className="text-2xl sm:text-3xl font-serif font-normal text-royal-blue leading-tight">Enter your personal details</h2>
-                <div className="h-[1px] w-12 bg-gold/40 mt-2" />
-            </div>
-
-            <div className="space-y-4">
-                <div className="space-y-1">
-                    <label className="text-[9px] font-bold text-royal-blue/60 uppercase tracking-[2px] block ml-1">Full Name</label>
-                    <input
-                        required
-                        value={formData.name}
-                        onBlur={() => setTouched({ ...touched, name: true })}
-                        className={inputClasses("name")}
-                        placeholder="Your Name "
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    />
-                    {touched.name && errors.name && <p className="text-[10px] text-red-500 font-bold ml-1 tracking-wide">✦ {errors.name}</p>}
+            <motion.form
+                onSubmit={handleSubmit}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                className="w-full space-y-5"
+            >
+                <div className="relative">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-normal text-royal-blue leading-tight">Enter your personal details</h2>
+                    <div className="h-[1px] w-12 bg-gold/40 mt-2" />
                 </div>
 
-                <div className="space-y-1">
-                    <label className="text-[9px] font-bold text-royal-blue/60 uppercase tracking-[2px] block ml-1">Email Address</label>
-                    <input
-                        required
-                        type="email"
-                        value={formData.email}
-                        onBlur={() => setTouched({ ...touched, email: true })}
-                        className={inputClasses("email")}
-                        placeholder="Email Addresh"
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    />
-                    {touched.email && errors.email && <p className="text-[10px] text-red-500 font-bold ml-1 tracking-wide">✦ {errors.email}</p>}
-                </div>
-
-                <div className="space-y-1">
-                    <label className="text-[9px] font-bold text-royal-blue/60 uppercase tracking-[2px] block ml-1">Mobile Number</label>
-                    <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-royal-blue/40 font-bold border-r pr-3 border-gold/20 text-xs font-sans">+91</span>
+                <div className="space-y-4">
+                    <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-royal-blue/60 uppercase tracking-[2px] block ml-1">Full Name</label>
                         <input
                             required
-                            type="tel"
-                            maxLength={10}
-                            value={formData.phone}
-                            onBlur={() => setTouched({ ...touched, phone: true })}
-                            className={`${inputClasses("phone")} pl-14 font-sans`}
-                            placeholder="phone number"
-                            onChange={handlePhoneChange}
+                            value={formData.name}
+                            onBlur={() => setTouched({ ...touched, name: true })}
+                            className={inputClasses("name")}
+                            placeholder="Your Name "
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         />
+                        {touched.name && errors.name && <p className="text-[10px] text-red-500 font-bold ml-1 tracking-wide">✦ {errors.name}</p>}
                     </div>
-                    {touched.phone && errors.phone && <p className="text-[10px] text-red-500 font-bold ml-1 tracking-wide">✦ {errors.phone}</p>}
-                </div>
-            </div>
 
-            <div className="bg-sandstone/60 p-4 rounded-xl border border-gold/15 flex gap-3 items-center select-none">
-                <span className="text-xl filter drop-shadow-sm">📧</span>
-                <p className="text-[11px] text-royal-blue/70 leading-relaxed font-serif italic">
-                    Your e-ticket and transaction details will be sent to this email address. Please double check.
-                </p>
-            </div>
+                    <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-royal-blue/60 uppercase tracking-[2px] block ml-1">Email Address</label>
+                        <input
+                            required
+                            type="email"
+                            value={formData.email}
+                            onBlur={() => setTouched({ ...touched, email: true })}
+                            className={inputClasses("email")}
+                            placeholder="Email Address"
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        />
+                        {touched.email && errors.email && <p className="text-[10px] text-red-500 font-bold ml-1 tracking-wide">✦ {errors.email}</p>}
+                    </div>
 
-            <div className="flex justify-between items-center pt-2 gap-4">
-                <button
-                    type="button"
-                    onClick={onBack}
-                    className="flex-1 py-3.5 font-bold font-serif text-xs text-jaipur-dark hover:text-royal-blue transition-colors uppercase tracking-[2px]">
-                    ← Edit ticket
-                </button>
-
-                <button
-                    type="submit"
-                    disabled={loading || !isFormValid}
-                    className={`flex-[2] py-3.5 rounded-xl font-serif text-xs font-bold tracking-[3px] transition-all duration-300 uppercase border relative overflow-hidden
-                        ${loading || !isFormValid
-                            ? "bg-sandstone/50 text-gray-400 cursor-not-allowed border-gray-200/60"
-                            : "bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border-gold/30 cursor-pointer shadow-md shadow-jaipur-dark/10 active:scale-99"
-                        }`}
-                >
-                    <span className={loading ? "opacity-0" : "opacity-100"}>PROCEED TO PAY ⟶</span>
-                    {loading && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-royal-blue">
-                            <div className="w-5 h-5 border-2 border-gold/20 border-t-gold rounded-full animate-spin"></div>
+                    <div className="space-y-1">
+                        <label className="text-[9px] font-bold text-royal-blue/60 uppercase tracking-[2px] block ml-1">Mobile Number</label>
+                        <div className="relative">
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-royal-blue/40 font-bold border-r pr-3 border-gold/20 text-xs font-sans">+91</span>
+                            <input
+                                required
+                                type="tel"
+                                maxLength={10}
+                                value={formData.phone}
+                                onBlur={() => setTouched({ ...touched, phone: true })}
+                                className={`${inputClasses("phone")} pl-14 font-sans`}
+                                placeholder="Phone number"
+                                onChange={handlePhoneChange}
+                            />
                         </div>
-                    )}
-                </button>
-            </div>
-        </motion.form>
+                        {touched.phone && errors.phone && <p className="text-[10px] text-red-500 font-bold ml-1 tracking-wide">✦ {errors.phone}</p>}
+                    </div>
+                </div>
+
+                <div className="bg-sandstone/60 p-4 rounded-xl border border-gold/15 flex gap-3 items-center select-none">
+                    <span className="text-xl filter drop-shadow-sm">📧</span>
+                    <p className="text-[11px] text-royal-blue/70 leading-relaxed font-serif italic">
+                        Your e-ticket and transaction details will be sent to this email address. Please double check.
+                    </p>
+                </div>
+
+                <div className="flex justify-between items-center pt-2 gap-4">
+                    <button
+                        type="button"
+                        onClick={onBack}
+                        className="flex-1 py-3.5 font-bold font-serif text-xs text-jaipur-dark hover:text-royal-blue transition-colors uppercase tracking-[2px]">
+                        ← Edit ticket
+                    </button>
+
+                    <button
+                        type="submit"
+                        disabled={loading || !isFormValid}
+                        className={`flex-[2] py-3.5 rounded-xl font-serif text-xs font-bold tracking-[3px] transition-all duration-300 uppercase border relative overflow-hidden
+                            ${loading || !isFormValid
+                                ? "bg-sandstone/50 text-gray-400 cursor-not-allowed border-gray-200/60"
+                                : "bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border-gold/30 cursor-pointer shadow-md shadow-jaipur-dark/10 active:scale-99"
+                            }`}
+                    >
+                        <span>PROCEED TO PAY ⟶</span>
+                    </button>
+                </div>
+            </motion.form>
+        </>
     );
 }

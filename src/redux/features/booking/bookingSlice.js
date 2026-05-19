@@ -11,11 +11,11 @@ const initialState = {
         phone: "",
     },
     totalAmount: 0,
+    ticketTotal: 0,
 };
 
 const bookingSlice = createSlice({
     name: "booking",
-
     initialState,
 
     reducers: {
@@ -42,6 +42,9 @@ const bookingSlice = createSlice({
         setTotalAmount: (state, action) => {
             state.totalAmount = action.payload;
         },
+        setTicketTotal: (state, action) => {
+            state.ticketTotal = action.payload;
+        },
 
         resetBooking: () => initialState,
     },
@@ -55,6 +58,7 @@ export const {
     setVisitorInfo,
     setTotalAmount,
     resetBooking,
+    setTicketTotal,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

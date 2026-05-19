@@ -6,8 +6,6 @@ export default function Banners({ url, url2, text, reverse = false }) {
   return (
     <section className="w-full py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 overflow-hidden select-none bg-white">
       <div className={`flex flex-col ${reverse ? "md:flex-row-reverse" : "md:flex-row"} items-center justify-between gap-12 md:gap-16 lg:gap-20 max-w-7xl mx-auto`}>
-
-        {/* IMAGE WRAPPER LAYER: Fluid responsive (Percentage & Aspect Ratio based) */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -15,7 +13,6 @@ export default function Banners({ url, url2, text, reverse = false }) {
           transition={{ staggerChildren: 0.15 }}
           className="relative w-full max-w-md md:max-w-none md:w-1/2 aspect-[4/3] sm:aspect-video md:aspect-[4/3] flex-shrink-0"
         >
-          {/* Primary Image (Left-Bottom Layer) */}
           <motion.div
             variants={{
               hidden: { opacity: 0, x: reverse ? 30 : -30, y: 20 },
@@ -29,8 +26,6 @@ export default function Banners({ url, url2, text, reverse = false }) {
               className="w-full h-full object-cover border-4 md:border-8 border-white rounded-xl sm:rounded-2xl"
             />
           </motion.div>
-
-          {/* Secondary Image (Right-Top Overlay Layer) */}
           <motion.div
             variants={{
               hidden: { opacity: 0, scale: 0.92, y: -20 },
@@ -46,7 +41,6 @@ export default function Banners({ url, url2, text, reverse = false }) {
           </motion.div>
         </motion.div>
 
-        {/* TEXT CONTENT CONTAINER: Clean fluid typography and dynamic bar */}
         <motion.div
           initial={{ opacity: 0, x: reverse ? -30 : 30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -54,15 +48,12 @@ export default function Banners({ url, url2, text, reverse = false }) {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="w-full md:w-1/2 text-left"
         >
-          {/* items-stretch ensures the indicator bar height perfectly matches the text height */}
           <div className="flex items-stretch gap-4 md:gap-6 max-w-2xl mx-auto md:mx-0">
-
-            {/* Structural Indicator Bar - Now dynamically scales with the paragraph */}
             <motion.div
               initial={{ scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 1.2, delay: 0.5 }}
               className="w-1.5 sm:w-2 bg-[#E07A5F] rounded-full shrink-0 origin-top"
             />
 

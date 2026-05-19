@@ -43,10 +43,9 @@ export default function RoyalCursor() {
 
     return (
         <>
-            {/* 1. Center Pointer Dot (Reduced from 10px to 6px) */}
             <motion.div
                 animate={{
-                    x: position.x - 3, // Changed from -5 to -3 (Half of 6px)
+                    x: position.x - 3, 
                     y: position.y - 3,
                     scale: isHovering ? 1.3 : 1,
                     opacity: isHidden ? 0 : 1,
@@ -54,11 +53,9 @@ export default function RoyalCursor() {
                 transition={{ type: "spring", stiffness: 700, damping: 30, mass: 0.1 }}
                 className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-[#FFD700] z-[9999] pointer-events-none shadow-[0_0_10px_rgba(255,215,0,0.9)]"
             />
-
-            {/* 2. Luxury Outer Ring (Reduced from 48px to 32px) */}
             <motion.div
                 animate={{
-                    x: position.x - 16, // Changed from -24 to -16 (Half of 32px)
+                    x: position.x - 16,
                     y: position.y - 16,
                     scale: isHovering ? 1.5 : 1,
                     opacity: isHidden ? 0 : 1,
@@ -66,11 +63,9 @@ export default function RoyalCursor() {
                 transition={{ type: "spring", stiffness: 220, damping: 24 }}
                 className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#FFD700]/70 z-[9998] pointer-events-none shadow-[0_0_15px_rgba(255,215,0,0.25)] backdrop-blur-[0.5px]"
             />
-
-            {/* 3. Ambient Aura Glow (Squeezed and lowered opacity for elegance) */}
             <motion.div
                 animate={{
-                    x: position.x - 24, // Changed from -40 to -24 (Half of 48px)
+                    x: position.x - 24, 
                     y: position.y - 24,
                     scale: isHovering ? 1.6 : 1,
                     opacity: isHidden ? 0 : isHovering ? 0.15 : 0.08,
