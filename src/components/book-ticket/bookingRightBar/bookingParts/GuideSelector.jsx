@@ -6,10 +6,10 @@ import CounterBtn from "../../../ui/CounterBtn";
 import { setAddons, setTotalAmount } from "@/redux/features/booking/bookingSlice";
 import { usePlace } from "@/hooks/usePlace";
 import { useAddons } from "@/lib/queries/useAddon";
-import FullPageLoader from "@/components/ui/FullPageLoader";  
+import FullPageLoader from "@/components/ui/FullPageLoader";
 
 export default function GuideSelector({ addons, onNext, onBack }) {
-    const dispatch = useDispatch(); 
+    const dispatch = useDispatch();
     const ticketTotal = useSelector((state) => state.booking.ticketTotal);
     const { placeId } = usePlace();
 
@@ -25,7 +25,7 @@ export default function GuideSelector({ addons, onNext, onBack }) {
             });
             setCounts(init);
         }
-    }, [addonList]);
+    }, [addonList, counts]);
 
     const updateCount = (id, value) => {
         setCounts((prev) => ({
@@ -55,13 +55,14 @@ export default function GuideSelector({ addons, onNext, onBack }) {
             const id = item.id || item._id;
             resetCounts[id] = 0;
         });
+        setCounts(resetCounts);
         dispatch(setAddons(resetCounts));
         dispatch(setTotalAmount(ticketTotal));
         onNext();
     };
 
     return (
-        <> 
+        <>
             <AnimatePresence mode="wait">
                 {isLoading && <FullPageLoader message="Discovering Royal Add-ons..." />}
             </AnimatePresence>
@@ -79,7 +80,7 @@ export default function GuideSelector({ addons, onNext, onBack }) {
                     </div>
                     <button onClick={handleSkip} className="text-jaipur-dark hover:text-royal-blue font-serif font-bold text-[10px] uppercase tracking-widest border-b border-gold/40 pb-0.5 transition-all cursor-pointer shrink-0">Skip Services ⟶</button>
                 </div>
-     
+
                 <div className="w-full space-y-2.5 rounded-xl border border-dashed border-gold/15 p-2 bg-sandstone/10">
                     {!isLoading && addonList.map((item, index) => {
                         const itemId = item.id || item._id;
@@ -102,11 +103,11 @@ export default function GuideSelector({ addons, onNext, onBack }) {
                                     </p>
                                 </div>
 
-                                <div className="flex items-center justify-between w-full sm:w-auto gap-4 sm:gap-6 shrink-0"> 
+                                <div className="flex items-center justify-between w-full sm:w-auto gap-4 sm:gap-6 shrink-0">
                                     <p className={`font-serif text-xl font-bold tracking-wide ${isSelected ? "text-gold drop-shadow-sm" : "text-royal-blue"}`}>
                                         ₹{item.price}
                                     </p>
-                                    <div className={`flex items-center gap-3 px-2 py-1.5 rounded-lg border transition-colors duration-300
+                                    {/* <div className={`flex items-center gap-3 px-2 py-1.5 rounded-lg border transition-colors duration-300
                                         ${isSelected
                                             ? "bg-white/10 border-white/20"
                                             : "bg-sandstone/80 border-gold/15"
@@ -124,13 +125,25 @@ export default function GuideSelector({ addons, onNext, onBack }) {
                                             text="+"
                                             onClick={() => updateCount(itemId, 1)}
                                         />
-                                    </div>
+                                    </div> */}
+
+                                    <button
+                                        onClick={() =>
+                                            setCounts((prev) => ({
+                                                ...prev,
+                                                [itemId]: prev[itemId] ? 0 : 1,
+                                            }))
+                                        }
+                                        className={`px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-[2px] transition-all duration-300 border ${isSelected ? "bg-white text-royal-blue border-white" : "bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border-gold/30"
+                                            }`}>
+                                        {isSelected ? "Applied ✔️" : "Apply"}
+                                    </button>
                                 </div>
                             </motion.div>
                         );
                     })}
                 </div>
-     
+
                 <div className="p-4 rounded-xl bg-gradient-to-r from-royal-blue to-[#0b2149] text-white shadow-xl relative overflow-hidden border border-gold/20">
                     <div className="absolute inset-0 opacity-[0.06] bg-mandala pointer-events-none scale-120"></div>
                     <div className="relative z-10 space-y-2.5">
@@ -147,7 +160,7 @@ export default function GuideSelector({ addons, onNext, onBack }) {
                         </div>
                     </div>
                 </div>
-     
+
                 <div className="flex justify-between items-center pt-2 gap-4">
                     <button onClick={onBack} className="flex-1 py-3.5 font-bold font-serif text-xs text-jaipur-dark hover:text-royal-blue transition-colors uppercase tracking-[2px]">← Back</button>
                     <button onClick={handleContinue} className="flex-[2] py-3.5 rounded-xl bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border border-gold/30 font-serif text-xs font-bold tracking-[3px] transition-all duration-300 uppercase shadow-md shadow-jaipur-dark/10 cursor-pointer">PROCEED TO DETAILS ⟶</button>

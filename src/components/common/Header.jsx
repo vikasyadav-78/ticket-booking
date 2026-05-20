@@ -8,7 +8,7 @@ const Header = () => {
     const { data: places = [] } = usePlaces();
     const firstPlace = places?.[0];
     const bookingLink = firstPlace ? `/book-tickets/${firstPlace.id || firstPlace._id}` : "#";
- 
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -39,7 +39,10 @@ const Header = () => {
 
                 <div className="md:order-2">
                     <Link href={bookingLink}>
-                        <BookNowBtn title={"Book Now"} addClass={scrolled ? "bg-jaipur-pink text-white border-none hover:bg-[#C35A40] hover:scale-105" : "bg-jaipur-dark text-white border-none hover:bg-[#C35A40] hover:scale-105"} />
+                        <BookNowBtn
+                            title={"Book Now"}
+                            addClass="bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border-none hover:from-jaipur-dark hover:to-[#b24d18] hover:scale-[1.02] active:scale-[0.98] shadow-[0_10px_25px_rgba(153,65,19,0.3)] transition-all duration-300"
+                        />
                     </Link>
                 </div>
             </div>

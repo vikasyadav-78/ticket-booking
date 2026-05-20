@@ -6,7 +6,6 @@ import api from "../api";
 export const useBookings = () => {
   return useQuery({
     queryKey: ["bookings"],
-
     queryFn: async () => {
       const res = await api.get("/booking/all");
 
@@ -18,7 +17,6 @@ export const useBookings = () => {
 export const useBookingById = (id) => {
   return useQuery({
     queryKey: ["booking", id],
-
     queryFn: async () => {
       const res = await api.get(`/booking/${id}`);
 

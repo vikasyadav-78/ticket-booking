@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";  
+import { motion, AnimatePresence } from "framer-motion";
 import BookNowBtn from "@/components/ui/BookNowBtn";
 import Banners from "@/components/Home/Banners";
 import Link from "next/link";
 import Image from "next/image";
 import { usePlaces } from "@/lib/queries/usePlace";
 import { mockPlaces } from "@/data/mockPlaces";
-import PlacesSlider from "@/components/Home/PlacesSlider";
+// import PlacesSlider from "@/components/Home/PlacesSlider";
 import GuidBanner from "@/components/Home/GuidBanner";
 import { ChevronsUp } from "lucide-react";
 
@@ -58,7 +58,7 @@ export default function Home() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-50 bg-[#E07A5F] hover:bg-[#C35A40] text-white p-3 rounded-full shadow-2xl transition-colors group cursor-pointer"
+            className="fixed bottom-8 right-8 z-50 p-3 rounded-full group cursor-pointer bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border-none hover:from-jaipur-dark hover:to-[#b24d18] hover:scale-[1.02] active:scale-[0.98] shadow-[0_10px_25px_rgba(153,65,19,0.3)] transition-all duration-300"
           >
             <ChevronsUp className="size-8 transition-transform group-hover:-translate-y-1" />
           </motion.button>
@@ -141,8 +141,8 @@ export default function Home() {
                 <Link href={finalPlaces?.[0] ? `/book-tickets/${finalPlaces[0]?.id || finalPlaces[0]?._id}` : "#"}
                   className="inline-flex w-full md:w-auto" >
                   <BookNowBtn
-                    addClass="w-full md:w-auto bg-[#E07A5F] hover:bg-[#C35A40] text-white border-none px-8 py-3.5 rounded-xl font-bold tracking-wide shadow-lg shadow-[#E07A5F]/20 transition-all"
-                    title="Book Now"
+                    title={"Book Now"}
+                    addClass="bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border-none hover:from-jaipur-dark hover:to-[#b24d18] hover:scale-[1.02] active:scale-[0.98] shadow-[0_10px_25px_rgba(153,65,19,0.3)] transition-all duration-300"
                   />
                 </Link>
               </div>

@@ -38,8 +38,8 @@ export default function Footer() {
 
                 <Link href={bookingLink} className="mt-8 group">
                     <BookNowBtn
-                        title="Book Your Ticekt Now"
-                        addClass="bg-jaipur-pink text-white border-none px-10 py-4 text-xs tracking-[2px] uppercase font-serif font-bold rounded-xl hover:bg-[#C35A40] hover:scale-105 hover:shadow-[0_10px_25px_rgba(195,90,64,0.3)] transition-all duration-300 transform"
+                        title={"Book Your Ticekt Now"}
+                        addClass="bg-gradient-to-r from-jaipur-dark to-[#994113] text-white border-none hover:from-jaipur-dark hover:to-[#b24d18] hover:scale-[1.02] active:scale-[0.98] shadow-[0_10px_25px_rgba(153,65,19,0.3)] transition-all duration-300 text-xs tracking-[2px] uppercase font-serif font-bold rounded-xl px-10 py-5"
                     />
                 </Link>
             </motion.div>
@@ -107,13 +107,13 @@ export default function Footer() {
                 </div>
 
                 <div className="mt-10 text-center text-[11px] font-sans tracking-[3px] text-gray-400 uppercase">
-                    MADE WITH ❤️ IN INDIA BY{" "} 
+                    MADE WITH ❤️ IN INDIA BY{" "}
                     <a
                         href="http://www.azzunique.in/"
                         target="_blank"
-                        className="text-royal-blue font-black tracking-[2px] ml-1 hover:text-jaipur-pink hover:underline transition-all duration-300 cursor-pointer inline-block"
+                        className="text-royal-blue font-black tracking-[2px] ml-1 hover:text-jaipur-dark hover:underline transition-all duration-300 cursor-pointer inline-block"
                     >
-                        AZZUNIQUE
+                        AZZUNIQUE SOFTWARE PVT. LTD.
                     </a>
                 </div>
             </motion.div>
